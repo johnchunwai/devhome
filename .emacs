@@ -29,7 +29,22 @@
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
 
-;;; theme
+;;; look and feel
 ;; get zenburn theme from https://github.com/bbatsov/zenburn-emacs
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/zenburn-emacs")
 (load-theme 'zenburn t)
+;; font - download dejavu sans mono from the web and install
+(set-face-attribute 'default nil :font "DejaVu Sans Mono")
+;; minimalism
+(tool-bar-mode -1)
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;;; autocomplete
+;; enable ido
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;;; misc
+;; make commands like less, git diff works in shell mode
+(setenv "PAGER" "cat")
