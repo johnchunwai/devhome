@@ -31,5 +31,5 @@
 
 ;;; theme
 ;; get zenburn theme from https://github.com/bbatsov/zenburn-emacs
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/zenburn-emacs")
 (load-theme 'zenburn t)
