@@ -1,4 +1,7 @@
 # emacs junk files
 *.*~
-.emacs.d/
+.emacs.d/**
+!.emacs.d/**/*.el
 
+# shell junk
+.history

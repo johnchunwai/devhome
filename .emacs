@@ -26,8 +26,14 @@
 
 ;;; tabs
 (setq-default indent-tabs-mode nil)
+;; defines how wide to display tabs
 (setq-default tab-width 4)
+;; defines where the cursor stops when pressing TAB as indent-relative's fallback
+(setq tab-stop-list (number-sequence 4 120 4))
 (setq-default c-basic-offset 4)
+(load "~/.emacs.d/google-c-style-mod")
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
 ;;; look and feel
 ;; get zenburn theme from https://github.com/bbatsov/zenburn-emacs
@@ -48,3 +54,5 @@
 ;;; misc
 ;; make commands like less, git diff works in shell mode
 (setenv "PAGER" "cat")
+;; .h to open in c++ mode then c mode
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
