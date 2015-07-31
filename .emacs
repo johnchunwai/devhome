@@ -1,4 +1,4 @@
-(setq debug-on-error t)
+;; (setq debug-on-error t)
 
 ;;;
 ;;; package
@@ -10,33 +10,34 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
 ;; for automatic install packages if not already installed on new machines
-(defvar my-packages
-  '(multiple-cursors auto-complete))
+(defvar my/packages
+  '(multiple-cursors auto-complete zenburn-theme))
+
+;; package configs
+(defun my/package-config ()
+  ;; auto-complete
+  (ac-config-default)
+  ;; multiple-cursors
+  ;; zenburn theme
+  (load-theme 'zenburn t)
+  )
 
 (require 'cl-lib)
-(defun my-install-packages ()
-  ;; Ensure the packages I use are installed. See 'my-packages'.
+(defun my/install-packages ()
+  ;; Ensure the packages I use are installed. See 'my/packages'.
   (interactive)
   (package-initialize)
-  (let ((missing-packages (cl-remove-if #'package-installed-p my-packages)))
+  (let ((missing-packages (cl-remove-if #'package-installed-p my/packages)))
     (when missing-packages
       (message "Installing %d missing package(s)" (length missing-packages))
       (package-refresh-contents)
       (mapc #'package-install missing-packages))))
 
-;; package configs
-(defun my-package-config ()
-  ;; auto-complete
-  (ac-config-default)
-  ;; multiple-cursors
-  )
-
 (add-hook 'after-init-hook
           (lambda ()
-            (my-install-packages)
-            (ac-config-default)
+            (my/install-packages)
+            (my/package-config)
             ))
-
 
 
 ;; save/restore session automatically
@@ -70,6 +71,7 @@
 ;; defines where the cursor stops when pressing TAB as indent-relative's fallback
 (setq tab-stop-list (number-sequence 4 120 4))
 (setq-default c-basic-offset 4)
+;; google-c-style is download and modified for my own needs
 (load "~/.emacs.d/google-c-style-mod")
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
@@ -85,9 +87,6 @@
 ;;;
 ;;; look and feel
 ;;;
-;; get zenburn theme from https://github.com/bbatsov/zenburn-emacs
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/zenburn-emacs")
-(load-theme 'zenburn t)
 ;; font - download dejavu sans mono from the web and install
 (set-face-attribute 'default nil :font "DejaVu Sans Mono")
 ;; minimalism
