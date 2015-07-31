@@ -1,0 +1,94 @@
+Prerequisites
+=============
+- install gnu emacs
+- install MinGW with MSys unix commands
+- add to FRONT of path for mingw and msys bin folder
+
+debug .emacs
+------------
+(setq c-echo-syntactic-information-p t)
+
+package handling
+----------------
+M-x package-install <package name>            install a package
+M-x package-TAB                               see the list of package commands
+M-x package-list-packages                     list package mode
+    i                                              mark for install
+    d                                              mark for del
+    u                                              undo mark for install/del
+    U                                              mark all package with newer version for upgrade
+    x                                              execute marked
+    r                                              refresh package list
+    f                                              filter package list
+
+
+shotcuts
+--------
+C-g							                  Cancel command
+M-x desktop-save                              save emacs session
+C-u                                           pass argument to command
+C-q <key, eg. TAB>                            quoted insert
+M-x tabify, M-x untabify                      change space to tab and vice versa
+M-x eval-expression                           execute a lisp expression
+C-c C-s                                       syntactic analysis (good for formatting)
+
+C-f, C-b, C-p, C-n                            Move right, left, up, down by 1 space
+M-f, M-b                                      Move right, left by 1 word
+C-a, C-e, M-a, M-e                            Begin/end of line, begin/end of sentence
+C-M-a, C-M-e                                  Begin/end of function
+C-v, M-v                                      pagedown/pageup
+M-<, M->                                      begin/end of buffer
+C-l                                           point in middle of screen
+M-g g                                         go to line
+
+C-x C-f and C-x C-s                           Visiting (opening) and saving
+    C-j                                           use what is type instead of ido suggestion
+C-x b and C-x C-b                             Switching between buffers
+    o                                             open in a new window
+C-x k                                         Kill the current buffer (not window)
+C-SPC                                         Using the mark and the point to set the region
+C-x h                                         region whole buffer
+C-M-h                                         Region around a function
+C-w, M-w, C-k, C-y, M-y                       Killing and yanking (pasting)
+C-M-\                                         indent region
+M-q                                           fill paragraph (good for formatting strings/comments)
+C-s, C-r                                      Searching forwards and backwards - repeat to search next
+C-M-s, C-M-r                                  Search with regex (MUST escape | and parentheses)
+                                              (whitespace changes from \s to \s-, no \d support)
+M-%                                           Find and replace
+M-/                                           autocomplete
+
+M-x                                           Invoking commands by name
+C-/                                           Undo
+C-g C-/                                       Redo (subsequent C-/ continues)
+M-q                                           Wrap text
+C-x C-u, C-x C-l                              Make region upper or lowercase
+C-g                                           Cancelling half-entered commands
+C-h m, C-h k, C-h f, C-h a, C-h C-h           Getting help on editing modes, keybindings and commands
+                                              (just remember C-h and read the prompt in the minibuffer)
+C-x C-c                                       Quitting Emacs
+C-x 1                                         Show only 1 window
+C-x 2                                         Split window below
+C-x 3                                         Split window to the right
+C-x 0                                         Close current window
+
+M-x shell RET                                 Run shell
+    M-p/M-n                                       cycle thru commands history
+M-|                                           shell command on region (selection)
+    C-u 2 M-|                                     shell command on region replace
+
+C-x d                                         Dired
+    p, n                                          move up/down
+    RET                                           visit selected
+    C, D, R                                       copy, del, rename
+    d                                             mark for del
+    x                                             execute marked
+    !                                             specify a shell command to carry out on a file
+    q                                             quit dired mode
+
+M-x compile                                   build
+    M-n/M-p                                       move between compile errors
+    RET                                           show error in source
+    C-c C-f                                       show error in source, keep cursor in error
+M-x rgrep                                         search all occurences in project
+                                              same key binding as compilation
