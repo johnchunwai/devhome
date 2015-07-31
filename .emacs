@@ -18,6 +18,11 @@
   ;; auto-complete
   (ac-config-default)
   ;; multiple-cursors
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-unset-key (kbd "<C-down-mouse-1>"))
+  (global-set-key (kbd "<C-down-mouse-1>") 'mc/add-cursor-on-click)
+  (global-set-key (kbd "<C-mouse-1>") 'ignore)
   ;; zenburn theme
   (load-theme 'zenburn t)
   )

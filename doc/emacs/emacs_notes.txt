@@ -41,6 +41,9 @@ M-<, M->                                      begin/end of buffer
 C-l                                           point in middle of screen
 M-g g                                         go to line
 
+C-down-mouse-1                                multi-cursor at mouse pointer
+C->, C-<                                      multi-cursor for next/prev like this
+
 C-x C-f and C-x C-s                           Visiting (opening) and saving
     C-j                                           use what is type instead of ido suggestion
 C-x b and C-x C-b                             Switching between buffers

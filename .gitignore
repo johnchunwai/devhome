@@ -1,7 +1,7 @@
 # emacs junk files
 *.*~
 .emacs.d/**
-!.emacs.d/**/*.el
+!.emacs.d/**/google-c-style-mod.el
 
 # shell junk
 .history
