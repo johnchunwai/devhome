@@ -32,7 +32,7 @@
   (setq company-idle-delay 0)
   ;; init irony
   ;; do M-x irony-install-server when first use
-  (add-hook 'c++mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'objc-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)

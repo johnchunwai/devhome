@@ -44,6 +44,14 @@ M-g g                                         go to line
 C-down-mouse-1                                multi-cursor at mouse pointer
 C->, C-<                                      multi-cursor for next/prev like this
 
+C-M-i                                         irony complete (assume irony with company, yasnippet
+    M-<num>                                       select <num>-th suggestion
+    M-n, M-p                                      next/prev suggestion
+    C-s, C-r, C-o                                 search completions
+    f1                                            display doc
+    C-w                                           view source
+    TAB                                           yasnippet template
+    
 C-x C-f and C-x C-s                           Visiting (opening) and saving
     C-j                                           use what is type instead of ido suggestion
 C-x b and C-x C-b                             Switching between buffers
@@ -52,7 +60,8 @@ C-x k                                         Kill the current buffer (not windo
 C-SPC                                         Using the mark and the point to set the region
 C-x h                                         region whole buffer
 C-M-h                                         Region around a function
-C-w, M-w, C-k, C-y, M-y                       Killing and yanking (pasting)
+C-w, M-w, C-y, M-y                            Killing and yanking (pasting)
+C-k, C-S-backspace                            kill rest of line/whole line
 C-M-\                                         indent region
 M-q                                           fill paragraph (good for formatting strings/comments)
 C-s, C-r                                      Searching forwards and backwards - repeat to search next
