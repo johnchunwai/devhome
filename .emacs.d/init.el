@@ -6,13 +6,13 @@
 ;; package repository
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+;(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
 ;; for automatic install packages if not already installed on new machines
-;; irony requires cmake to be installed (google)
+;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my/packages
-  '(multiple-cursors zenburn-theme yasnippet company))
+  '(multiple-cursors zenburn-theme yasnippet company irony company-irony))
 
 ;; package configs
 (defun my/package-config ()
@@ -30,7 +30,30 @@
   (global-company-mode)
   (setq company-tooltip-align-annotations t)
   (setq company-idle-delay 0)
+  ;; init irony
+  ;; do M-x irony-install-server when first use
+  (add-hook 'c++mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'objc-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  (setq w32-pipe-read-delay 0)
+  ;; init company-irony
+  (eval-after-load 'company
+    '(add-to-list 'company-backends 'company-irony))
+  ;; adds CC special commands to `company-begin-commands' in order to
+  ;; trigger completion at interesting places, such as after scope operator
+  ;; 	std::
+  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)  
   )
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
 
 (require 'cl-lib)
 (defun my/install-packages ()
