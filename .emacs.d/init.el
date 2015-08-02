@@ -10,13 +10,12 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
 ;; for automatic install packages if not already installed on new machines
+;; irony requires cmake to be installed (google)
 (defvar my/packages
-  '(multiple-cursors auto-complete zenburn-theme))
+  '(multiple-cursors zenburn-theme yasnippet company))
 
 ;; package configs
 (defun my/package-config ()
-  ;; auto-complete
-  (ac-config-default)
   ;; multiple-cursors
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -25,6 +24,12 @@
   (global-set-key (kbd "<C-mouse-1>") 'ignore)
   ;; zenburn theme
   (load-theme 'zenburn t)
+  ;; init yasnippet
+  (yas-global-mode 1)
+  ;; company mode for all buffers (optional)
+  (global-company-mode)
+  (setq company-tooltip-align-annotations t)
+  (setq company-idle-delay 0)
   )
 
 (require 'cl-lib)
