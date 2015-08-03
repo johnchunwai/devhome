@@ -1,4 +1,21 @@
-;; (setq debug-on-error t)
+(setq debug-on-error t)
+
+;;;
+;;; load path
+;;;
+(eval-when-compile (require 'cl))
+(defun my/add-subdirs-to-load-path (parent-dir)
+  "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
+  (let* ((default-directory parent-dir))
+    (progn
+      (setq load-path
+            (append
+             (remove-if-not
+              (lambda (dir) (file-directory-p dir))
+              (directory-files (expand-file-name parent-dir) t "^[^\\.]"))
+             load-path)))))
+(my/add-subdirs-to-load-path
+ (expand-file-name "site-lisp/" user-emacs-directory))
 
 ;;;
 ;;; package
@@ -6,9 +23,9 @@
 ;; package repository
 (require 'package)
 (setq package-enable-at-startup nil)
-;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+                                        ;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-;(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+                                        ;(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my/packages
@@ -32,11 +49,15 @@
   (setq company-idle-delay 0)
   ;; init irony
   ;; do M-x irony-install-server when first use
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
+  (let ((irony-supported-mode-hooks '(c++-mode-hook c-mode-hook objc-mode-hook)))
+    (dolist (mode irony-supported-mode-hooks)
+      (add-hook mode 'irony-mode)))
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  ;; get irony-eldoc from https://github.com/josteink/irony-eldoc because
+  ;; the package has bug for new emacs
+  (require 'irony-eldoc)
+  (add-hook 'irony-mode-hook 'irony-eldoc)
   (setq w32-pipe-read-delay 0)
   ;; init company-irony
   (eval-after-load 'company
