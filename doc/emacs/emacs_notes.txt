@@ -29,7 +29,7 @@ M-x desktop-save                              save emacs session
 C-u                                           pass argument to command
 C-q <key, eg. TAB>                            quoted insert
 M-x tabify, M-x untabify                      change space to tab and vice versa
-M-x eval-expression                           execute a lisp expression
+M-:                                           execute a lisp expression
 C-c C-s                                       syntactic analysis (good for formatting)
 
 C-f, C-b, C-p, C-n                            Move right, left, up, down by 1 space
@@ -61,7 +61,8 @@ C-SPC                                         Using the mark and the point to se
 C-x h                                         region whole buffer
 C-M-h                                         Region around a function
 C-w, M-w, C-y, M-y                            Killing and yanking (pasting)
-C-k, C-S-backspace                            kill rest of line/whole line
+C-k, C-x DEL, C-S-backspace, M-k              kill rest of line/beginning of line/whole line/end of sentence
+C-M-k                                         kill the following balanced expression
 C-M-\                                         indent region
 M-q                                           fill paragraph (good for formatting strings/comments)
 C-s, C-r                                      Searching forwards and backwards - repeat to search next
@@ -102,5 +103,11 @@ M-x compile                                   build
     M-n/M-p                                       move between compile errors
     RET                                           show error in source
     C-c C-f                                       show error in source, keep cursor in error
-M-x rgrep                                         search all occurences in project
+M-x rgrep                                     search all occurences in project
                                               same key binding as compilation
+
+flycheck
+--------
+C-c ! c                                       manual flycheck buffer
+C-c ! n, C-c ! p                              flycheck-next-error, flycheck-previous-error
+C-c ! l                                       flycheck-list-errors

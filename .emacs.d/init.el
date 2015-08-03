@@ -3,33 +3,56 @@
 ;;;
 ;;; load path
 ;;;
-(eval-when-compile (require 'cl))
-(defun my/add-subdirs-to-load-path (parent-dir)
-  "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
-  (let* ((default-directory parent-dir))
-    (progn
-      (setq load-path
-            (append
-             (remove-if-not
-              (lambda (dir) (file-directory-p dir))
-              (directory-files (expand-file-name parent-dir) t "^[^\\.]"))
-             load-path)))))
-(my/add-subdirs-to-load-path
- (expand-file-name "site-lisp/" user-emacs-directory))
+(require 'cl-lib)
+(let ((default-directory
+        (convert-standard-filename (concat user-emacs-directory "site-lisp/"))))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;;;
 ;;; package
 ;;;
 ;; package repository
 (require 'package)
-(setq package-enable-at-startup nil)
-                                        ;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-                                        ;(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+(setq package-enable-at-startup nil)
+;; benchmark-init - start as early as possible because we need to benchmark init
+;; (let ((benchmark-directory-list
+;;        (file-expand-wildcards (convert-standard-filename (concat user-emacs-directory "elpa/benchmark-init*"))))
+;;       (found-benchmark-init nil))
+;;   (dolist (file benchmark-directory-list)
+;;     (when (file-directory-p file)
+;;       (add-to-list 'load-path file)
+;;       (setq found-benchmark-init t)))
+;;   (when found-benchmark-init
+;;     (require 'benchmark-init)
+;;     (benchmark-init/activate)))
+;; initializing packages
+(package-initialize)
+
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my/packages
-  '(multiple-cursors zenburn-theme yasnippet company irony company-irony))
+  '(multiple-cursors zenburn-theme yasnippet company irony company-irony
+                     company-irony-c-headers flycheck flycheck-irony))
+
+(defun my/install-packages ()
+  ;; Ensure the packages I use are installed. See 'my/packages'.
+  (interactive)
+  (let ((missing-packages (cl-remove-if #'package-installed-p my/packages)))
+    (when missing-packages
+      (message "Installing %d missing package(s)" (length missing-packages))
+      (package-refresh-contents)
+      (mapc #'package-install missing-packages))))
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my/irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
 
 ;; package configs
 (defun my/package-config ()
@@ -52,7 +75,7 @@
   (let ((irony-supported-mode-hooks '(c++-mode-hook c-mode-hook objc-mode-hook)))
     (dolist (mode irony-supported-mode-hooks)
       (add-hook mode 'irony-mode)))
-  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'my/irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
   ;; get irony-eldoc from https://github.com/josteink/irony-eldoc because
   ;; the package has bug for new emacs
@@ -60,38 +83,21 @@
   (add-hook 'irony-mode-hook 'irony-eldoc)
   (setq w32-pipe-read-delay 0)
   ;; init company-irony
-  (eval-after-load 'company
-    '(add-to-list 'company-backends 'company-irony))
+  (with-eval-after-load 'company
+    (add-to-list 'company-backends '(company-irony-c-headers company-irony)))
   ;; adds CC special commands to `company-begin-commands' in order to
   ;; trigger completion at interesting places, such as after scope operator
   ;; 	std::
-  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)  
+  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+  ;; init flycheck
+  (global-flycheck-mode)
+  ;; init flycheck-irony
+  (with-eval-after-load 'flycheck
+    (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
   )
 
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-
-(require 'cl-lib)
-(defun my/install-packages ()
-  ;; Ensure the packages I use are installed. See 'my/packages'.
-  (interactive)
-  (package-initialize)
-  (let ((missing-packages (cl-remove-if #'package-installed-p my/packages)))
-    (when missing-packages
-      (message "Installing %d missing package(s)" (length missing-packages))
-      (package-refresh-contents)
-      (mapc #'package-install missing-packages))))
-
-(add-hook 'after-init-hook
-          (lambda ()
-            (my/install-packages)
-            (my/package-config)
-            ))
+(my/install-packages)
+(my/package-config)
 
 
 ;; save/restore session automatically
