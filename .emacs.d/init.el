@@ -72,13 +72,12 @@
   (setq company-idle-delay 0)
   ;; init irony
   ;; do M-x irony-install-server when first use
-  (let ((irony-supported-mode-hooks '(c++-mode-hook c-mode-hook objc-mode-hook)))
-    (dolist (mode irony-supported-mode-hooks)
-      (add-hook mode 'irony-mode)))
+  (dolist (mode '(c++-mode-hook c-mode-hook objc-mode-hook))
+    (add-hook mode 'irony-mode))
   (add-hook 'irony-mode-hook 'my/irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
   ;; get irony-eldoc from https://github.com/josteink/irony-eldoc because
-  ;; the package has bug for new emacs
+  ;; the melpa package has bug for new emacs
   (require 'irony-eldoc)
   (add-hook 'irony-mode-hook 'irony-eldoc)
   (setq w32-pipe-read-delay 0)
@@ -150,7 +149,10 @@
 ;; font - download dejavu sans mono from the web and install
 (set-face-attribute 'default nil :font "DejaVu Sans Mono")
 ;; minimalism
-(tool-bar-mode -1)
+(when (fboundp tool-bar-mode)
+  (tool-bar-mode -1))
+(when (scroll-bar-mode)
+  (scroll-bar-mode -1))
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; show column position
 (setq column-number-mode t)
@@ -160,7 +162,21 @@
 (setenv "PAGER" "cat")
 ;; .h to open in c++ mode then c mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-;; recycle bin
-(setq delete-by-moving-to-trash t)
+;; better key bindings
+(global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+
+(setq delete-by-moving-to-trash t           ; use recycle bin
+      save-interprogram-paste-before-kill t ; put clipboard item from other program in kill ring before kill
+      require-final-newline t               ; add new line at EOF when save
+      apropos-do-all t                      ; apropos checks more
+      visible-bell t                        ; flash buffer instead of beep on error
+      load-prefer-newer t                   ; load prefers newest version of a file (eg. a.el vs a.elc)
+      ;; put all emacs back up files (eg. a.txt~) into same directory
+      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+      )
 ;; turn on recent file list, call recentf-open-files to list and open
 (recentf-mode 1)
