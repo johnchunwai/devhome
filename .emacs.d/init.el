@@ -1,4 +1,16 @@
+;;; init.el --- emacs init file
+;; Prerequisites:
+;;     - download dejavu sans mono font from the web and install
+;;     -
+
+;;; Commentary:
+;; Create this while learning emacs.
+
+;;; Code:
 (setq debug-on-error t)
+
+(when (version< emacs-version "24.5.1")
+  (error "This init file requires at least GNU Emacs 24.5.1, but you're running %s" emacs-version))
 
 ;;;
 ;;; load path
@@ -36,7 +48,7 @@
 (defvar my/packages
   '(multiple-cursors zenburn-theme yasnippet company irony company-irony
                      company-irony-c-headers flycheck flycheck-irony
-                     smex))
+                     smex window-numbering))
 
 (defun my/install-packages ()
   ;; Ensure the packages I use are installed. See 'my/packages'.
@@ -65,6 +77,8 @@
   (global-set-key (kbd "<C-mouse-1>") 'ignore)
   ;; zenburn theme
   (load-theme 'zenburn t)
+  ;; init window-numbering
+  (window-numbering-mode 1)
   ;; init yasnippet
   (yas-global-mode 1)
   ;; company mode for all buffers (optional)
@@ -154,10 +168,9 @@
 ;; font - download dejavu sans mono from the web and install
 (set-face-attribute 'default nil :font "DejaVu Sans Mono")
 ;; minimalism
-(when (fboundp tool-bar-mode)
-  (tool-bar-mode -1))
-(when (scroll-bar-mode)
-  (scroll-bar-mode -1))
+;; (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; show column position
 (setq column-number-mode t)
