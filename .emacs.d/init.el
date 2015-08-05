@@ -1,7 +1,8 @@
 ;;; init.el --- emacs init file
 ;; Prerequisites:
-;;     - download dejavu sans mono font from the web and install
-;;     -
+;;     - install dejavu sans mono font from the web
+;;     - install cmake, add to PATH
+;;     - install LLVM for libclang, add to PATH
 
 ;;; Commentary:
 ;; Create this while learning emacs.
