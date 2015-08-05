@@ -38,8 +38,9 @@ C-a, C-e, M-a, M-e                            Begin/end of line, begin/end of se
 C-M-a, C-M-e                                  Begin/end of function
 C-v, M-v                                      pagedown/pageup
 M-<, M->                                      begin/end of buffer
-C-l                                           point in middle of screen
-M-g g                                         go to line
+C-l                                           move screen so point at mid/top/bottom of screen
+M-r                                           similar to above by move point instead of screen
+M-g c, M-g g, M-g TAB                         go to buffer pos/line/col
 
 C-down-mouse-1                                multi-cursor at mouse pointer
 C->, C-<                                      multi-cursor for next/prev like this
@@ -62,13 +63,18 @@ C-x b and C-x C-b                             Switching between buffers
     E                                             eval form in all marked buffers
     t                                             toggle all marked/unmarked buffers
     =                                             diff buffer with files
-C-x k                                         Kill the current buffer (not window)
+C-x k                                         Kill the current buffer
+
+M-\                                           delete space between 2 words
+C-w, M-w                                      Kill region
+M-d, M-backspace                              Kill forward/bacqkward for word
+C-k, C-x backspace, C-S-backspace, M-k        kill rest of line/beginning of line/whole line/end of sentence
+C-M-k                                         kill the following balanced expression
+
 C-SPC                                         Using the mark and the point to set the region
 C-x h                                         region whole buffer
 C-M-h                                         Region around a function
-C-w, M-w, C-y, M-y                            Killing and yanking (pasting)
-C-k, C-x DEL, C-S-backspace, M-k              kill rest of line/beginning of line/whole line/end of sentence
-C-M-k                                         kill the following balanced expression
+C-y, M-y                                      Yank, cycle through prev in kill ring
 C-M-\                                         indent region
 M-q                                           fill paragraph (good for formatting strings/comments)
 C-s, C-r                                      Searching forwards and backwards - repeat to search next
