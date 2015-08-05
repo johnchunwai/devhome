@@ -35,7 +35,8 @@
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my/packages
   '(multiple-cursors zenburn-theme yasnippet company irony company-irony
-                     company-irony-c-headers flycheck flycheck-irony))
+                     company-irony-c-headers flycheck flycheck-irony
+                     smex))
 
 (defun my/install-packages ()
   ;; Ensure the packages I use are installed. See 'my/packages'.
@@ -93,6 +94,10 @@
   ;; init flycheck-irony
   (with-eval-after-load 'flycheck
     (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+  ;; init smex
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   )
 
 (my/install-packages)
