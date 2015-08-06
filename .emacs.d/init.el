@@ -19,6 +19,8 @@
 (require 'cl-lib)
 (let ((default-directory
         (convert-standard-filename (concat user-emacs-directory "site-lisp/"))))
+  (unless (file-accessible-directory-p default-directory)
+    (make-directory default-directory))
   (normal-top-level-add-subdirs-to-load-path))
 
 ;;;
