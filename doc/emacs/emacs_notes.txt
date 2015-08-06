@@ -3,6 +3,10 @@ Prerequisites
 - install gnu emacs
 - install MinGW with MSys unix commands
 - add to FRONT of path for mingw and msys bin folder
+- for MSys2
+  - add mingw64 to path
+  - generate .clang_complete file
+  - may have to manually build irony-server https://github.com/Sarcasm/irony-mode/wiki/Setting-up-irony-mode-on-Windows-using-Msys2-and-Mingw-Packages
 
 debug .emacs
 ------------
