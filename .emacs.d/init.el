@@ -49,9 +49,22 @@
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my/packages
-  '(multiple-cursors zenburn-theme yasnippet company irony company-irony
-                     company-irony-c-headers flycheck flycheck-irony
-                     smex window-numbering))
+  '(multiple-cursors                    ; multiple points selection
+    zenburn-theme                       ; dark theme
+    yasnippet                           ; template autofill
+    company                             ; autocomplete mode
+    irony                               ; C++ autocomplete using company and yasnippet
+    company-irony                       ; make irony use company mode
+    company-irony-c-headers             ; irony autocomplete headers
+    flycheck                            ; error checking in real time
+    flycheck-irony                      ; error check using irony
+    smex                                ; ido style feedback for M-x
+    window-numbering                    ; quickly switch window with M-num
+    flx-ido                             ; optimized ido with fuzzy search
+    ido-ubiquitous                      ; replace stock completion with ido completion everywhere
+    idle-highlight-mode                 ; highlight all occurences of word at point on a timer
+    smartparens                         ; smart parentheses
+    ))
 
 (defun my/install-packages ()
   ;; Ensure the packages I use are installed. See 'my/packages'.
@@ -158,12 +171,28 @@
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 ;;; autocomplete
 ;; enable ido
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
 (ido-mode 1)
-;; text highlighting
+(ido-everywhere 1)
+(setq ido-enable-flex-matching t)
+(setq ido-case-fold t)
+(setq ido-use-virtual-buffers t)
+(when (equal system-type 'windows-nt)
+  (setq ido-max-dir-file-cache 0))      ; windows unreliable directory mod time could cause confusion
+(ido-ubiquitous-mode 1)
+;; parenthesis stuff
 (show-paren-mode 1)
 (setq show-paren-style 'expression)
+;; (electric-pair-mode 1)
+(smartparens-global-mode t)
+(require 'smartparens-config)
+(global-set-key (kbd "C-)") 'sp-forward-slurp-sexp)
+(global-set-key (kbd "C-(") 'sp-backward-slurp-sexp)
+(global-set-key (kbd "C-}") 'sp-forward-barf-sexp)
+(global-set-key (kbd "C-{") 'sp-backward-barf-sexp)
+ ;; init highlight mode
+(defun enable-idle-highlight-mode () (idle-highlight-mode t))
+(add-hook 'c-mode-common-hook 'enable-idle-highlight-mode)
+(add-hook 'emacs-lisp-mode-hook 'enable-idle-highlight-mode)
 
 ;;;
 ;;; look and feel
