@@ -17,8 +17,10 @@
 ;;; load path
 ;;;
 (require 'cl-lib)
+(defun my/subdir-under-emacsd (subdirectory)
+  (convert-standard-filename (concat user-emacs-directory "site-lisp/")))
 (let ((default-directory
-        (convert-standard-filename (concat user-emacs-directory "site-lisp/"))))
+        (my/subdir-under-emacsd "site-lisp/")))
   (unless (file-accessible-directory-p default-directory)
     (make-directory default-directory))
   (normal-top-level-add-subdirs-to-load-path))
@@ -34,7 +36,7 @@
 (setq package-enable-at-startup nil)
 ;; benchmark-init - start as early as possible because we need to benchmark init
 ;; (let ((benchmark-directory-list
-;;        (file-expand-wildcards (convert-standard-filename (concat user-emacs-directory "elpa/benchmark-init*"))))
+;;        (file-expand-wildcards (my/subdir-under-emacsd "elpa/benchmark-init*")))
 ;;       (found-benchmark-init nil))
 ;;   (dolist (file benchmark-directory-list)
 ;;     (when (file-directory-p file)
@@ -64,6 +66,7 @@
     ido-ubiquitous                      ; replace stock completion with ido completion everywhere
     idle-highlight-mode                 ; highlight all occurences of word at point on a timer
     smartparens                         ; smart parentheses
+    magit                               ; a ait porcelain inside emacs
     ))
 
 (defun my/install-packages ()
@@ -97,6 +100,8 @@
   (window-numbering-mode 1)
   ;; init yasnippet
   (yas-global-mode 1)
+  (yas-load-directory (my/subdir-under-emacsd "my-snippet"))
+  (add-hook 'term-mode-hook (lambda () (setq yas-dont-activate t))) ; so tab-complete works in terminal
   ;; company mode for all buffers (optional)
   (global-company-mode)
   (setq company-tooltip-align-annotations t)
@@ -128,6 +133,8 @@
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+  ;; init magit
+  (global-set-key (kbd "C-c m") 'magit-status)
   )
 
 (my/install-packages)
