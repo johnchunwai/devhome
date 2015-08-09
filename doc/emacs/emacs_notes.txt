@@ -128,3 +128,10 @@ flycheck
 C-c ! c                                       manual flycheck buffer
 C-c ! n, C-c ! p                              flycheck-next-error, flycheck-previous-error
 C-c ! l                                       flycheck-list-errors
+
+smartparens
+-----------
+C-0                                           sp-forward-slurp-sexp
+C-M-9                                         sp-backward-slurp-sexp
+C-}                                           sp-forward-barf-sexp
+C-{                                           sp-backward-barf-sexp

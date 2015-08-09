@@ -1,4 +1,4 @@
-;;; init.el --- emacs init file
+;;; init.el --- emacs init file  -*- lexical-binding: t; -*-
 ;; Prerequisites:
 ;;     - install dejavu sans mono font from the web
 ;;     - install cmake, add to PATH
@@ -17,13 +17,27 @@
 ;;; load path
 ;;;
 (require 'cl-lib)
-(defun my/subdir-under-emacsd (subdirectory)
-  (convert-standard-filename (concat user-emacs-directory "site-lisp/")))
-(let ((default-directory
-        (my/subdir-under-emacsd "site-lisp/")))
-  (unless (file-accessible-directory-p default-directory)
-    (make-directory default-directory))
-  (normal-top-level-add-subdirs-to-load-path))
+
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer and copy in clipboard."
+  (interactive)
+  (message (buffer-file-name))
+  (kill-new (convert-standard-filename (expand-file-name buffer-file-name))))
+
+(defun my-user-emacs-subdir (subdir)
+  "Return path for SUBDIR under .emacs.d."
+  (convert-standard-filename (expand-file-name subdir user-emacs-directory)))
+
+(defun my-create-dir-if-not-exist (dir)
+  "Create DIR if not already exist."
+  (unless (file-accessible-directory-p dir)
+    (make-directory dir)))
+
+;; (let ((default-directory
+;;         (my-user-emacs-subdir "site-lisp/")))
+;;   (my-create-dir-if-not-exist default-directory)
+;;   (normal-top-level-add-subdirs-to-load-path))
+
 
 ;;;
 ;;; package
@@ -34,24 +48,15 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
 (setq package-enable-at-startup nil)
-;; benchmark-init - start as early as possible because we need to benchmark init
-;; (let ((benchmark-directory-list
-;;        (file-expand-wildcards (my/subdir-under-emacsd "elpa/benchmark-init*")))
-;;       (found-benchmark-init nil))
-;;   (dolist (file benchmark-directory-list)
-;;     (when (file-directory-p file)
-;;       (add-to-list 'load-path file)
-;;       (setq found-benchmark-init t)))
-;;   (when found-benchmark-init
-;;     (require 'benchmark-init)
-;;     (benchmark-init/activate)))
 ;; initializing packages
 (package-initialize)
 
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
-(defvar my/packages
-  '(multiple-cursors                    ; multiple points selection
+(defvar my-packages
+  '(
+    el-get                              ; allow us to install packages from github and other sources
+    multiple-cursors                    ; multiple points selection
     zenburn-theme                       ; dark theme
     yasnippet                           ; template autofill
     company                             ; autocomplete mode
@@ -66,28 +71,27 @@
     ido-ubiquitous                      ; replace stock completion with ido completion everywhere
     idle-highlight-mode                 ; highlight all occurences of word at point on a timer
     smartparens                         ; smart parentheses
-    magit                               ; a ait porcelain inside emacs
     ))
 
-(defun my/install-packages ()
-  ;; Ensure the packages I use are installed. See 'my/packages'.
+(defun my-install-packages ()
+  "Install all packages defined in `my-packages'."
   (interactive)
-  (let ((missing-packages (cl-remove-if #'package-installed-p my/packages)))
+  (let ((missing-packages (cl-remove-if #'package-installed-p my-packages)))
     (when missing-packages
       (message "Installing %d missing package(s)" (length missing-packages))
       (package-refresh-contents)
       (mapc #'package-install missing-packages))))
 
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-(defun my/irony-mode-hook ()
+(defun my-irony-mode-hook ()
+  "Replace the `completion-at-point' and `complete-symbol' with irony's functions."
   (define-key irony-mode-map [remap completion-at-point]
     'irony-completion-at-point-async)
   (define-key irony-mode-map [remap complete-symbol]
     'irony-completion-at-point-async))
 
 ;; package configs
-(defun my/package-config ()
+(defun my-package-config ()
+  (interactive)
   ;; multiple-cursors
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -100,7 +104,8 @@
   (window-numbering-mode 1)
   ;; init yasnippet
   (yas-global-mode 1)
-  (yas-load-directory (my/subdir-under-emacsd "my-snippet"))
+  ;; (let ((my-snippet-dir (my-user-emacs-subdir "my-snippet")))
+  ;;   (yas-load-directory my-snippet-dir))
   (add-hook 'term-mode-hook (lambda () (setq yas-dont-activate t))) ; so tab-complete works in terminal
   ;; company mode for all buffers (optional)
   (global-company-mode)
@@ -110,11 +115,8 @@
   ;; do M-x irony-install-server when first use
   (dolist (mode '(c++-mode-hook c-mode-hook objc-mode-hook))
     (add-hook mode 'irony-mode))
-  (add-hook 'irony-mode-hook 'my/irony-mode-hook)
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  ;; get irony-eldoc from https://github.com/josteink/irony-eldoc because
-  ;; the melpa package has bug for new emacs
-  (require 'irony-eldoc)
   (add-hook 'irony-mode-hook 'irony-eldoc)
   (setq w32-pipe-read-delay 0)
   ;; init company-irony
@@ -133,12 +135,20 @@
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-  ;; init magit
-  (global-set-key (kbd "C-c m") 'magit-status)
   )
 
-(my/install-packages)
-(my/package-config)
+(my-install-packages)
+;; get irony-eldoc from https://github.com/johnchunwai/irony-eldoc because
+;; the melpa package has bug for new emacs
+(require 'el-get)
+(el-get-bundle! irony-eldoc
+  :description "irony-mode support for eldoc-mode"
+  :website "https://github.com/johnchunwai/irony-eldoc"
+  :type github
+  :feature irony-eldoc
+  :pkgname "johnchunwai/irony-eldoc")
+
+(my-package-config)
 
 
 ;; save/restore session automatically
@@ -192,11 +202,11 @@
 ;; (electric-pair-mode 1)
 (smartparens-global-mode t)
 (require 'smartparens-config)
-(global-set-key (kbd "C-)") 'sp-forward-slurp-sexp)
-(global-set-key (kbd "C-(") 'sp-backward-slurp-sexp)
+(global-set-key (kbd "C-0") 'sp-forward-slurp-sexp)
+(global-set-key (kbd "C-9") 'sp-backward-slurp-sexp)
 (global-set-key (kbd "C-}") 'sp-forward-barf-sexp)
 (global-set-key (kbd "C-{") 'sp-backward-barf-sexp)
- ;; init highlight mode
+;; init highlight mode
 (defun enable-idle-highlight-mode () (idle-highlight-mode t))
 (add-hook 'c-mode-common-hook 'enable-idle-highlight-mode)
 (add-hook 'emacs-lisp-mode-hook 'enable-idle-highlight-mode)
@@ -233,7 +243,37 @@
       visible-bell t                        ; flash buffer instead of beep on error
       load-prefer-newer t                   ; load prefers newest version of a file (eg. a.el vs a.elc)
       ;; put all emacs back up files (eg. a.txt~) into same directory
-      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+      backup-directory-alist `(("." . ,(my-user-emacs-subdir "backups")))
       )
 ;; turn on recent file list, call recentf-open-files to list and open
 (recentf-mode 1)
+
+(provide 'init)
+
+;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   (quote
+    ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook"
+           (add-hook
+            (quote write-contents-functions)
+            (lambda nil
+              (delete-trailing-whitespace)
+              nil))
+           (require
+            (quote whitespace))
+           "Sometimes the mode needs to be toggled off and on."
+           (whitespace-mode 0)
+           (whitespace-mode 1))
+     (whitespace-line-column . 80)
+     (whitespace-style face tabs trailing lines-tail)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
