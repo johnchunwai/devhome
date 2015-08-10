@@ -24,9 +24,10 @@
   (message (buffer-file-name))
   (kill-new (convert-standard-filename (expand-file-name buffer-file-name))))
 
-(defun my-user-emacs-subdir (subdir)
-  "Return path for SUBDIR under .emacs.d."
-  (convert-standard-filename (expand-file-name subdir user-emacs-directory)))
+(defun my-os-neutral-abs-subdir (subdir dir)
+  "Return absolute OS specific path for SUBDIR under DIR"
+  (interactive)
+  (convert-standard-filename (expand-file-name subdir dir)))
 
 (defun my-create-dir-if-not-exist (dir)
   "Create DIR if not already exist."
@@ -34,7 +35,7 @@
     (make-directory dir)))
 
 ;; (let ((default-directory
-;;         (my-user-emacs-subdir "site-lisp/")))
+;;         (my-os-neutral-abs-subdir "site-lisp/" user-emacs-directory)))
 ;;   (my-create-dir-if-not-exist default-directory)
 ;;   (normal-top-level-add-subdirs-to-load-path))
 
@@ -104,7 +105,7 @@
   (window-numbering-mode 1)
   ;; init yasnippet
   (yas-global-mode 1)
-  ;; (let ((my-snippet-dir (my-user-emacs-subdir "my-snippet")))
+  ;; (let ((my-snippet-dir (my-os-neutral-abs-subdir "my-snippet" user-emacs-directory)))
   ;;   (yas-load-directory my-snippet-dir))
   (add-hook 'term-mode-hook (lambda () (setq yas-dont-activate t))) ; so tab-complete works in terminal
   ;; company mode for all buffers (optional)
@@ -113,12 +114,18 @@
   (setq company-idle-delay 0)
   ;; init irony
   ;; do M-x irony-install-server when first use
+  (setq w32-pipe-read-delay 0)
+  ;; When .emacs.d is wiped and irony package version is updated, `irony-install-server' will fail.
+  ;; This is because, at least in windows version, cmake cache are stored in system temp directory
+  ;; instead of temp/irony-build-<server-version> directory because of the missing slash.
+  ;; Even if it uses temp/irony-build-<server-version>, it will still fail if package version updates
+  ;; but .emacs wiped. Therefore, we're putting the build folder in irony folder inside `irony-user-dir'.
+  (setq irony-server-build-dir (my-os-neutral-abs-subdir (format "build-%s/" (irony-version)) irony-user-dir))
   (dolist (mode '(c++-mode-hook c-mode-hook objc-mode-hook))
     (add-hook mode 'irony-mode))
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
   (add-hook 'irony-mode-hook 'irony-eldoc)
-  (setq w32-pipe-read-delay 0)
   ;; init company-irony
   (with-eval-after-load 'company
     (add-to-list 'company-backends '(company-irony-c-headers company-irony)))
@@ -243,7 +250,7 @@
       visible-bell t                        ; flash buffer instead of beep on error
       load-prefer-newer t                   ; load prefers newest version of a file (eg. a.el vs a.elc)
       ;; put all emacs back up files (eg. a.txt~) into same directory
-      backup-directory-alist `(("." . ,(my-user-emacs-subdir "backups")))
+      backup-directory-alist `(("." . ,(my-os-neutral-abs-subdir "backups" user-emacs-directory)))
       )
 ;; turn on recent file list, call recentf-open-files to list and open
 (recentf-mode 1)
