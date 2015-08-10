@@ -70,6 +70,7 @@
     window-numbering                    ; quickly switch window with M-num
     flx-ido                             ; optimized ido with fuzzy search
     ido-ubiquitous                      ; replace stock completion with ido completion everywhere
+    ido-vertical-mode                   ; display ido suggestions vertically
     idle-highlight-mode                 ; highlight all occurences of word at point on a timer
     smartparens                         ; smart parentheses
     ))
@@ -203,6 +204,19 @@
 (when (equal system-type 'windows-nt)
   (setq ido-max-dir-file-cache 0))      ; windows unreliable directory mod time could cause confusion
 (ido-ubiquitous-mode 1)
+;; init ido veritical mode
+(require 'ido-vertical-mode)
+(setq ido-vertical-show-count t)
+(setq ido-use-faces t)
+(set-face-attribute 'ido-vertical-first-match-face nil
+                    :background nil
+                    :foreground "orange")
+(set-face-attribute 'ido-vertical-only-match-face nil
+                    :background nil
+                    :foreground nil)
+(set-face-attribute 'ido-vertical-match-face nil
+                    :foreground nil)
+(ido-vertical-mode 1)
 ;; parenthesis stuff
 (show-paren-mode 1)
 (setq show-paren-style 'expression)
