@@ -1,6 +1,7 @@
 Prerequisites
 =============
 - install gnu emacs
+- set HOME env variable either in a shell startup script or system level
 - install MinGW with MSys unix commands
 - add to FRONT of path for mingw and msys bin folder
 - for MSys2
