@@ -37,6 +37,8 @@ M-x tabify, M-x untabify                      change space to tab and vice versa
 M-:                                           execute a lisp expression
 C-c C-s                                       syntactic analysis (good for formatting)
 
+move around
+-----------
 C-f, C-b, C-p, C-n                            Move right, left, up, down by 1 space
 M-f, M-b                                      Move right, left by 1 word
 C-a, C-e, M-a, M-e                            Begin/end of line, begin/end of sentence
@@ -59,7 +61,6 @@ C-M-i                                         irony complete (assume irony with 
     TAB                                           yasnippet template
     
 C-x C-f and C-x C-s                           Visiting (opening) and saving
-    C-j                                           use what is type instead of ido suggestion
 C-x b and C-x C-b                             Switching between buffers
     m, u                                          mark/unmark buffer
     O                                             regex search on all marked buffer in occur window
@@ -135,3 +136,26 @@ C-0                                           sp-forward-slurp-sexp
 C-M-9                                         sp-backward-slurp-sexp
 C-}                                           sp-forward-barf-sexp
 C-{                                           sp-backward-barf-sexp
+
+ivy
+---
+C-u C-j                                       ignore completion and use what's entered (create file)
+M-q, M-< M-q (swiper)                         query replace curr/whole buffer
+M-q (file)                                    ivy-toggle-regexp-quote (useful when file contains dot)
+M-j                                           fill in extra stuff based on current selection
+M-n                                           paste symbol at point for search (eg. C-s M-n M-j M-j)
+//, ~                                         root, home (in file compl)
+C-m                                           ivy-done (use the current selected item)
+C-j                                           ivy-alt-done (same except: enter dir, cont for file compl)
+
+ace-window
+----------
+M-p                                           ace-window
+    x                                           del pick
+    m                                           swap pick with curr
+    v                                           split vert curr
+    b                                           split hori curr
+    n                                           select prev
+    i                                           maximize pick
+    o                                           maximize current
+C-u C-u M-p                                   del pick

@@ -66,13 +66,11 @@
     company-irony-c-headers             ; irony autocomplete headers
     flycheck                            ; error checking in real time
     flycheck-irony                      ; error check using irony
-    smex                                ; ido style feedback for M-x
-    window-numbering                    ; quickly switch window with M-num
-    flx-ido                             ; optimized ido with fuzzy search
-    ido-ubiquitous                      ; replace stock completion with ido completion everywhere
-    ido-vertical-mode                   ; display ido suggestions vertically
+    ace-window                          ; easy select window to switch to
+    swiper                              ; search with overview and ido replacement that is more efficient
     idle-highlight-mode                 ; highlight all occurences of word at point on a timer
     smartparens                         ; smart parentheses
+    golden-ratio                        ; auto resize windows to golden ratio
     ))
 
 (defun my-install-packages ()
@@ -102,8 +100,8 @@
   (global-set-key (kbd "<C-mouse-1>") 'ignore)
   ;; zenburn theme
   (load-theme 'zenburn t)
-  ;; init window-numbering
-  (window-numbering-mode 1)
+  ;; init ace-window
+  (global-set-key (kbd "M-p") 'ace-window)
   ;; init yasnippet
   (yas-global-mode 1)
   ;; (let ((my-snippet-dir (my-os-neutral-abs-subdir "my-snippet" user-emacs-directory)))
@@ -139,10 +137,24 @@
   ;; init flycheck-irony
   (with-eval-after-load 'flycheck
     (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+  ;; init swiper
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq confirm-nonexistent-file-or-buffer t)
+  (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "C-r") 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "<f6>") 'ivy-resume)
   ;; init smex
+  (setq smex-completion-method 'ivy)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+  ;; init golden-ratio
+  (require 'golden-ratio)
+  (setq golden-ratio-auto-scale t)
+  (add-to-list 'golden-ratio-extra-commands 'ace-window)
+  (golden-ratio-mode 1)
   )
 
 (my-install-packages)
@@ -155,6 +167,14 @@
   :type github
   :feature irony-eldoc
   :pkgname "johnchunwai/irony-eldoc")
+;; use a custom branch of smex to use ivy backend
+(el-get-bundle! smex
+  :description "M-x interface with Ido-style fuzzy matching."
+  :website "https://github.com/abo-abo/smex"
+  :type github
+  :feature smex
+  :pkgname "abo-abo/smex"
+  :post-init (smex-initialize))
 
 (my-package-config)
 
@@ -195,28 +215,6 @@
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 ;;; autocomplete
-;; enable ido
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-enable-flex-matching t)
-(setq ido-case-fold t)
-(setq ido-use-virtual-buffers t)
-(when (equal system-type 'windows-nt)
-  (setq ido-max-dir-file-cache 0))      ; windows unreliable directory mod time could cause confusion
-(ido-ubiquitous-mode 1)
-;; init ido veritical mode
-(require 'ido-vertical-mode)
-(setq ido-vertical-show-count t)
-(setq ido-use-faces t)
-(set-face-attribute 'ido-vertical-first-match-face nil
-                    :background nil
-                    :foreground "orange")
-(set-face-attribute 'ido-vertical-only-match-face nil
-                    :background nil
-                    :foreground nil)
-(set-face-attribute 'ido-vertical-match-face nil
-                    :foreground nil)
-(ido-vertical-mode 1)
 ;; parenthesis stuff
 (show-paren-mode 1)
 (setq show-paren-style 'expression)
@@ -252,10 +250,6 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 ;; better key bindings
 (global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
 
 (setq delete-by-moving-to-trash t           ; use recycle bin
       save-interprogram-paste-before-kill t ; put clipboard item from other program in kill ring before kill
@@ -272,29 +266,4 @@
 (provide 'init)
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   (quote
-    ((eval ignore-errors "Write-contents-functions is a buffer-local alternative to before-save-hook"
-           (add-hook
-            (quote write-contents-functions)
-            (lambda nil
-              (delete-trailing-whitespace)
-              nil))
-           (require
-            (quote whitespace))
-           "Sometimes the mode needs to be toggled off and on."
-           (whitespace-mode 0)
-           (whitespace-mode 1))
-     (whitespace-line-column . 80)
-     (whitespace-style face tabs trailing lines-tail)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
