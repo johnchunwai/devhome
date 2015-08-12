@@ -140,23 +140,36 @@ C-{                                           sp-backward-barf-sexp
 
 ivy
 ---
-C-u C-j                                       ignore completion and use what's entered (create file)
+C-M-s                                         counsel-git-grep
 M-q, M-< M-q (swiper)                         query replace curr/whole buffer
+M-o/C-m                                       ivy-dispatch-done/ivy-done
+C-M-n, C-M-p                                  ivy-next/prev-line-and-call
+C-u C-j                                       ignore completion and use what's entered (create file)
+C-./C-, (help)                                jump to def/jump to info
 M-q (file)                                    ivy-toggle-regexp-quote (useful when file contains dot)
+C-c C-r or <f6>                               ivy-resume
+S-SPC                                         restrict to matches
 M-j                                           fill in extra stuff based on current selection
 M-n                                           paste symbol at point for search (eg. C-s M-n M-j M-j)
 //, ~                                         root, home (in file compl)
 C-m                                           ivy-done (use the current selected item)
 C-j                                           ivy-alt-done (same except: enter dir, cont for file compl)
 
+hydra
+-----
+C-o                                           ivy-hydra
+
 ace-window
 ----------
 M-p                                           ace-window
     x                                           del pick
-    m                                           swap pick with curr
+    c                                           swap pick with curr
     v                                           split vert curr
-    b                                           split hori curr
+    h                                           split hori curr
     n                                           select prev
-    i                                           maximize pick
-    o                                           maximize current
+    m                                           max pick
+    g                                           max curr
+    b                                           balance windows
+    u                                           winner-undo
+    r                                           winner-redo
 C-u C-u M-p                                   del pick
