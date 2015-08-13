@@ -70,7 +70,7 @@
     hydra                               ; make emacs bindings that stick around
     ace-window                          ; easy select window to switch to
     swiper                              ; search with overview and ido replacement that is more efficient
-    idle-highlight-mode                 ; highlight all occurences of word at point on a timer
+    counsel                             ; convenience replacement functions using ivy
     smartparens                         ; smart parentheses
     golden-ratio                        ; auto resize windows to golden ratio
     ace-link                            ; quickly follow links in emacs
@@ -118,6 +118,9 @@
   (global-set-key (kbd "<C-mouse-1>") 'ignore)
   ;; zenburn theme
   (load-theme 'zenburn t)
+  (set-face-attribute 'highlight nil :background "#222")
+  ;; font - download dejavu sans mono from the web and install
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono")
   ;; init hydra
   ;; hydra is so awesome, check the community wiki for all the hydra snippets to use
   ;; https://github.com/abo-abo/hydra/wiki
@@ -292,24 +295,16 @@
 ;;; autocomplete
 ;; parenthesis stuff
 (show-paren-mode 1)
-(setq show-paren-style 'expression)
-;; (electric-pair-mode 1)
 (smartparens-global-mode t)
 (require 'smartparens-config)
 (global-set-key (kbd "C-0") 'sp-forward-slurp-sexp)
 (global-set-key (kbd "C-9") 'sp-backward-slurp-sexp)
 (global-set-key (kbd "C-}") 'sp-forward-barf-sexp)
 (global-set-key (kbd "C-{") 'sp-backward-barf-sexp)
-;; init highlight mode
-(defun enable-idle-highlight-mode () (idle-highlight-mode t))
-(add-hook 'c-mode-common-hook 'enable-idle-highlight-mode)
-(add-hook 'emacs-lisp-mode-hook 'enable-idle-highlight-mode)
 
 ;;;
 ;;; look and feel
 ;;;
-;; font - download dejavu sans mono from the web and install
-(set-face-attribute 'default nil :font "DejaVu Sans Mono")
 ;; minimalism
 ;; (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
