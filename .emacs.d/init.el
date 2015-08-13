@@ -68,12 +68,13 @@
     flycheck                            ; error checking in real time
     flycheck-irony                      ; error check using irony
     hydra                               ; make emacs bindings that stick around
+    avy                                 ; jump to things tree-style
     ace-window                          ; easy select window to switch to
+    ace-link                            ; quickly follow links in emacs
     swiper                              ; search with overview and ido replacement that is more efficient
     counsel                             ; convenience replacement functions using ivy
     smartparens                         ; smart parentheses
     golden-ratio                        ; auto resize windows to golden ratio
-    ace-link                            ; quickly follow links in emacs
     ))
 
 (defun my-install-packages ()
@@ -124,6 +125,16 @@
   ;; init hydra
   ;; hydra is so awesome, check the community wiki for all the hydra snippets to use
   ;; https://github.com/abo-abo/hydra/wiki
+  ;; init avy
+  (avy-setup-default)
+  (global-set-key (kbd "M-g g") 'avy-goto-line)
+  (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+  (global-set-key (kbd "M-g e") 'avy-goto-word-0)
+  (global-set-key (kbd "C-:") 'avy-goto-char)
+  (global-set-key (kbd "C-'") 'avy-goto-char-2)
+  ;; init ace-link
+  (ace-link-setup-default)
+  (add-hook 'org-mode-hook (lambda () (define-key org-mode-map (kbd "M-o") 'ace-link-org)))
   ;; init ace-window
   (use-package ace-window
     :ensure t
@@ -165,6 +176,31 @@
       (add-to-list 'aw-dispatch-alist '(?\; hydra-window-frame/body) t))
     (ace-window-display-mode t))
   (global-set-key (kbd "M-p") 'ace-window)
+  ;; init swiper
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq confirm-nonexistent-file-or-buffer t)
+  ;; (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))) ; fuzzy completion
+  (setq ivy-format-function 'my-ivy-format-function)
+  (global-set-key (kbd "C-s") 'swiper)
+  (global-set-key (kbd "C-r") 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "<f6>") 'ivy-resume)
+  (define-key ivy-minibuffer-map (kbd "TAB") 'ivy-partial)
+  ;; init counsel
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-h f") 'counsel-describe-function)
+  (global-set-key (kbd "C-h v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "C-h S") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "C-M-s") 'counsel-git-grep)
+  ;; init smex
+  (setq smex-completion-method 'ivy)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   ;; init yasnippet
   (yas-global-mode 1)
   ;; (let ((my-snippet-dir (my-os-neutral-abs-subdir "my-snippet" user-emacs-directory)))
@@ -200,39 +236,11 @@
   ;; init flycheck-irony
   (with-eval-after-load 'flycheck
     (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-  ;; init swiper
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq confirm-nonexistent-file-or-buffer t)
-  ;; (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))) ; fuzzy completion
-  (setq ivy-format-function 'my-ivy-format-function)
-  (global-set-key (kbd "C-s") 'swiper)
-  (global-set-key (kbd "C-r") 'swiper)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  (global-set-key (kbd "<f6>") 'ivy-resume)
-  (define-key ivy-minibuffer-map (kbd "TAB") 'ivy-partial)
-  ;; init counsel
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-h f") 'counsel-describe-function)
-  (global-set-key (kbd "C-h v") 'counsel-describe-variable)
-  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "C-h S") 'counsel-info-lookup-symbol)
-  (global-set-key (kbd "C-M-s") 'counsel-git-grep)
-  ;; init smex
-  (setq smex-completion-method 'ivy)
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   ;; init golden-ratio
   (require 'golden-ratio)
   (setq golden-ratio-auto-scale t)
   (add-to-list 'golden-ratio-extra-commands 'ace-window)
   (golden-ratio-mode 1)
-  ;; init ace-link
-  (ace-link-setup-default)
-  (add-hook 'org-mode-hook (lambda () (define-key org-mode-map (kbd "M-o") 'ace-link-org)))
   )
 
 (my-install-packages)

@@ -48,7 +48,7 @@ C-v, M-v                                      pagedown/pageup
 M-<, M->                                      begin/end of buffer
 C-l                                           move screen so point at mid/top/bottom of screen
 M-r                                           similar to above by move point instead of screen
-M-g c, M-g g, M-g TAB                         go to buffer pos/line/col
+M-g c, M-g g, M-g TAB                         go to buffer pos/avy-goto-line/col
 
 C-down-mouse-1                                multi-cursor at mouse pointer
 C->, C-<                                      multi-cursor for next/prev like this
@@ -158,6 +158,13 @@ C-j                                           ivy-alt-done (same except: enter d
 hydra
 -----
 C-o                                           ivy-hydra
+
+avy
+---
+C-'                                           avy-goto-char-2/swiper-avy
+C-:                                           avy-goto-char-1
+M-g w                                         avy-goto-word-1
+M-g e                                         avy-goto-word-0
 
 ace-window
 ----------
