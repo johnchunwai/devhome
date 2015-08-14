@@ -127,6 +127,11 @@
   ;; https://github.com/abo-abo/hydra/wiki
   ;; init avy
   (avy-setup-default)
+  (setq avy-style 'pre)
+  (set-face-attribute 'avy-lead-face-0 nil :foreground "#FFEBCD" :background "#5F9EA0") ; non-term lead char
+  (set-face-attribute 'avy-lead-face nil :foreground "#FFEBCD" :background "#5F9EA0") ; lead char
+  (set-face-attribute 'avy-lead-face-1 nil :foreground "white" :background "#9370db") ; matched lead char
+  ;; (set-face-attribute 'avy-lead-face-2 nil :foreground "white" :background "#f86bf3") ; no idea
   (global-set-key (kbd "M-g g") 'avy-goto-line)
   (global-set-key (kbd "M-g w") 'avy-goto-word-1)
   (global-set-key (kbd "M-g e") 'avy-goto-word-0)
