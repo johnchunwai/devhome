@@ -1,17 +1,15 @@
-# emacs junk files
+# emacs junk
 *.*~
 \#*\#
-.emacs.d/**
-!.emacs.d/**/google-c-style-mod.el
 
-# shell junk
-.bash*
-.inputrc
-.mintty*
-.profile
-.history
-.lesshst
-.gnupg
+# hidden and exclusions
+.*
+!.emacs.d/**/google-c-style-mod.el
+!.gitignore
+
+# executables
+*.exe
+*.out
 
 # vim junk
 _viminfo
