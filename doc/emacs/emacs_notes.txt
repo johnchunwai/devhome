@@ -49,6 +49,15 @@ M-<, M->                                      begin/end of buffer
 C-l                                           move screen so point at mid/top/bottom of screen
 M-r                                           similar to above by move point instead of screen
 M-g c, M-g g, M-g TAB                         go to buffer pos/avy-goto-line/col
+C-SPC                                         set-mark and activate region, repeat to deactivate
+C-u C-SPC                                     go back in history to prev marks
+
+bookmark
+--------
+C-x r m                                       set a bookmark
+C-x r l                                       list bookmarks
+C-x r b                                       jump back to bookmark
+
 
 C-down-mouse-1                                multi-cursor at mouse pointer
 C->, C-<                                      multi-cursor for next/prev like this
