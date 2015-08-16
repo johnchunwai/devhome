@@ -52,12 +52,30 @@ M-g c, M-g g, M-g TAB                         go to buffer pos/avy-goto-line/col
 C-SPC                                         set-mark and activate region, repeat to deactivate
 C-u C-SPC                                     go back in history to prev marks
 
-bookmark
---------
+C-M-f                                         forward-sexp
+C-M-b                                         backward-sexp
+C-M-k                                         kill-sexp
+C-M-t                                         
+
+bookmark and register
+----------------------
 C-x r m                                       set a bookmark
 C-x r l                                       list bookmarks
 C-x r b                                       jump back to bookmark
+C-x r <SPC>                                   save point to REG
+C-x r w/f REG                                 save win/frame config
+C-x r j REG                                   jump to register (REG is a register of choice (letter or num)
+C-x r s REG                                   save region to REG
+C-x r i REG                                   insert text from REG
+C-x r C-h                                     help for register
 
+
+region
+------
+C-SPC                                         Using the mark and the point to set the region
+C-x h                                         region whole buffer
+C-M-h                                         Region around a function
+C-M-<SPC>, C-M-@                              mark-sexp forward
 
 C-down-mouse-1                                multi-cursor at mouse pointer
 C->, C-<                                      multi-cursor for next/prev like this
@@ -72,6 +90,8 @@ C-M-i                                         irony complete (assume irony with 
     
 C-x C-f and C-x C-s                           Visiting (opening) and saving
 C-x b and C-x C-b                             Switching between buffers
+    o, C-o                                        open buffer swith point/not switch point
+    g                                             refresh
     m, u                                          mark/unmark buffer
     O                                             regex search on all marked buffer in occur window
     M-s a Cs                                      incremental search in marked buffers
@@ -79,6 +99,9 @@ C-x b and C-x C-b                             Switching between buffers
     E                                             eval form in all marked buffers
     t                                             toggle all marked/unmarked buffers
     =                                             diff buffer with files
+    /m                                            filter by mode
+        /g                                            add filtered as group
+        //                                            turn off filtering
 C-x k                                         Kill the current buffer
 
 M-\                                           delete space between 2 words
@@ -87,9 +110,6 @@ M-d, M-backspace                              Kill forward/bacqkward for word
 C-k, C-x backspace, C-S-backspace, M-k        kill rest of line/beginning of line/whole line/end of sentence
 C-M-k                                         kill the following balanced expression
 
-C-SPC                                         Using the mark and the point to set the region
-C-x h                                         region whole buffer
-C-M-h                                         Region around a function
 C-y, M-y                                      Yank, cycle through prev in kill ring
 C-M-\                                         indent region
 M-q                                           fill paragraph (good for formatting strings/comments)
@@ -119,12 +139,16 @@ M-|                                           shell command on region (selection
     C-u 2 M-|                                     shell command on region replace
 
 C-x d                                         Dired
+    i                                             insert subdirectory to work on both
     p, n                                          move up/down
     RET                                           visit selected
+    =                                             compare file with a prompted one
+    m, % m, % g                                   mark single/filename regex/content regex
     C, D, R                                       copy, del, rename
-    d                                             mark for del
-    x                                             execute marked
-    !                                             specify a shell command to carry out on a file
+    d, #, ~, % d                                  flag for del/auto-save files#/backup/regex
+    u                                             remove flag
+    x                                             execute flag
+    !, &                                          execute command on file(s)/async
     q                                             quit dired mode
 
 M-x compile                                   build
@@ -189,3 +213,34 @@ M-p                                           ace-window
     u                                           winner-undo
     r                                           winner-redo
 C-u C-u M-p                                   del pick
+
+Macro
+-----
+f3, C-x (                                      start record macro
+f4, C-x )                                      stop record macro
+f4, C-x e                                      playback macro
+
+ggtags
+------
+!!! For C++ project, don't use ctags !!!
+
+M-.                                            ggtags-find-tag-dwim (also prompts for tagging)
+M-]                                            ggtags-find-reference
+C-M-.                                          ggtags-find-tag-regexp
+
+C-c M-SPC                                      ggtags-save-to-register
+C-c M-%                                        ggtags-query-replace
+C-c M-/                                        ggtags-view-search-history
+C-c M-?                                        ggtags-show-definition
+C-c M-b                                        ggtags-browse-file-as-hypertext
+C-c M-f                                        ggtags-find-file
+C-c M-g                                        ggtags-grep
+C-c M-h                                        ggtags-view-tag-history
+C-c M-i                                        ggtags-idutils-query
+C-c M-j                                        ggtags-visit-project-root
+C-c M-k                                        ggtags-kill-file-buffers
+C-c M-n                                        ggtags-next-mark
+C-c M-o                                        ggtags-find-other-symbol
+C-c M-p                                        ggtags-prev-mark
+C-c M-DEL                                      ggtags-delete-tags
+

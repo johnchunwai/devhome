@@ -3,6 +3,7 @@
 ;;     - install dejavu sans mono font from the web
 ;;     - install cmake, add to PATH
 ;;     - install LLVM for libclang, add to PATH
+;;     - install gnu global for windows, add path (jumping around in src codes)
 
 ;;; Commentary:
 ;; Create this while learning emacs.
@@ -51,7 +52,11 @@
 (setq package-enable-at-startup nil)
 ;; initializing packages
 (package-initialize)
-
+;; init use-package
+;; check out the github page for all info for use-package
+(eval-when-compile
+  (require 'use-package)
+  (setq use-package-always-ensure t))
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my-packages
@@ -107,10 +112,6 @@
 ;; package configs
 (defun my-package-config ()
   (interactive)
-  ;; init use-package
-  ;; check out the github page for all info for use-package
-  (require 'use-package)
-  (setq use-package-always-ensure t)
   ;; multiple-cursors
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -246,6 +247,11 @@
   (setq golden-ratio-auto-scale t)
   (add-to-list 'golden-ratio-extra-commands 'ace-window)
   (golden-ratio-mode 1)
+  (use-package ggtags
+    :config
+    (add-hook 'c-mode-common-hook (lambda ()
+                                    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                                      (ggtags-mode 1)))))
   )
 
 (my-install-packages)
