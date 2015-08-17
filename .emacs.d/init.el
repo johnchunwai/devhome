@@ -4,6 +4,7 @@
 ;;     - install cmake, add to PATH
 ;;     - install LLVM for libclang, add to PATH
 ;;     - install gnu global for windows, add path (jumping around in src codes)
+;;     - install ag (silver searcher)
 
 ;;; Commentary:
 ;; Create this while learning emacs.
@@ -112,6 +113,8 @@
 ;; package configs
 (defun my-package-config ()
   (interactive)
+  ;; init ag
+  (use-package ag)
   ;; multiple-cursors
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -250,8 +253,14 @@
   (use-package ggtags
     :config
     (add-hook 'c-mode-common-hook (lambda ()
-                                    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                                    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
                                       (ggtags-mode 1)))))
+  (use-package projectile
+    :config
+    (setq projectile-indexing-method 'alien)
+    (with-eval-after-load
+        (setq projectile-completion-system 'ivy))
+    (projectile-global-mode))
   )
 
 (my-install-packages)
