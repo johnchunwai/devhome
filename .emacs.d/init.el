@@ -56,11 +56,6 @@
 (setq package-enable-at-startup nil)
 ;; initializing packages
 (package-initialize)
-;; init use-package
-;; check out the github page for all info for use-package
-(eval-when-compile
-  (require 'use-package)
-  (setq use-package-always-ensure t))
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my-packages
@@ -276,6 +271,12 @@
   )
 
 (my-install-packages)
+;; init use-package
+;; check out the github page for all info for use-package
+(eval-when-compile
+  (require 'use-package)
+  (setq use-package-always-ensure t))
+
 ;; get irony-eldoc from https://github.com/johnchunwai/irony-eldoc because
 ;; the melpa package has bug for new emacs
 (require 'el-get)
