@@ -5,6 +5,9 @@
 ;;     - install LLVM for libclang, add to PATH
 ;;     - install gnu global for windows, add path (jumping around in src codes)
 ;;     - install ag (silver searcher)
+;;     - install python, pip, virtualevn, virtualenvwrapper (ref: doc/python/py_notes.txt)
+;;     - optional: create and work on vritualenv first (ref: doc/python/py_notes.txt)
+;;     - install doc/python/elpy-requirements.txt (ref: doc/python/py_notes.txt)
 
 ;;; Commentary:
 ;; Create this while learning emacs.
@@ -261,6 +264,15 @@
     (with-eval-after-load
         (setq projectile-completion-system 'ivy))
     (projectile-global-mode))
+
+  (use-package elpy
+    :init
+    (with-eval-after-load 'python (elpy-enable))
+    :config
+    ;; (setq elpy-rpc-backend "jedi")
+    (when (require 'flycheck nil t)
+      (remove-hook 'elpy-modules 'elpy-module-flymake)
+      (add-hook 'elpy-mode-hook 'flycheck-mode)))
   )
 
 (my-install-packages)
@@ -320,6 +332,7 @@
 (load "~/.emacs.d/google-c-style-mod")
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+(global-superword-mode t)
 ;;; autocomplete
 ;; parenthesis stuff
 (show-paren-mode 1)

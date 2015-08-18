@@ -289,3 +289,44 @@ C-c p 4 d                                      projectile-find-dir-other-window
 C-c p 4 f                                      projectile-find-file-other-window
 C-c p 4 g                                      projectile-find-file-dwim-other-window
 C-c p 4 t                                      projectile-find-implementation-or-test-other-window
+
+elpy
+----
+M-x elpy-config                                check current config
+M-x pyvenv-workon                              virtualenvwrapper's workon (switch python virtual env)
+
+C-c C-f                                        elpy-find-file (with prefix arg:
+                                                                    open module file at import
+                                                                    open associated test file
+                                                                    open implementation file from test)
+C-c C-s                                        elpy-rgrep-symbol
+
+C-c C-o                                        elpy-occur-definitions (outline all class, def)
+
+C-c <, C-c >                                   indent left/right
+M-.                                            elpy-goto-definition
+M-*                                            pop-tag-mark
+
+C-c C-v                                        elpy-check (flycheck by flake8, custom by python-check-command)
+C-c C-d                                        elpy-doc
+
+on completion option:
+C-d/<f1>                                       display doc
+C-w                                            display tmp window with src
+
+importmagic:
+C-c RET                                        importmagic-add-import
+C-c <S-return>                                 importmagic-fixup
+
+refactor:
+C-c C-e                                        elpy-multiedit-python-symbol-at-point (prefix use syntactic)
+C-c C-r                                        elpy-refactor (complex)
+
+interactive python:
+C-c C-z                                        elpy-shell-switch-to-shell
+C-c C-c                                        elpy-shell-send-region-or-buffer
+C-M-x                                          python-shell-send-defun (send curr top level class or fun)
+
+testing:
+C-c C-t                                        elpy-test (run all tests if prefix arg C-u)
+M-x elpy-set-test-runner                       support std unittest discovery runner, Django, nose, py.test

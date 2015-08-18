@@ -1,0 +1,30 @@
+Env setup
+---------
+- add python/Script to PATH (or use python -m pip instead of just pip)
+- pip install virtualenv
+- pip install virtualenvwrapper-win
+- add env variable WORKON_HOME for storing virtualenv environment managed by virtualenvwrapper
+
+virtualenvwrapper
+-----------------
+mkvirtualenv venv               create virtualenv named under venv folder
+workon venv                     activate venv, deactivate prev
+deactivate                      deactivate curr venv
+rmvirtualenv venv               delete
+lsvirtualenv                    list
+setprojectdir                   set the project dir to cd into
+cdproject                       if projectdir is set, cd into it
+lssitepackages                  list site-packages
+cdvirtualenv                    cd into the venv directory
+cdsitepackages                  cd into venv site-packages
+add2virtualenv <path>           add path to PYTHONPATH
+toggleglobalsitepackages        whether include global site-packages or not in venv
+whereis <file>                  find executable locations
+
+pip
+---
+pip install <package>
+pip install --upgrade <package>
+pip search <package>
+pip freeze > <requirement.txt>          create a requirement.txt to one line install all, best use with venv
+pip install -r <requirement.txt>        install everything listed in requirements.txt
