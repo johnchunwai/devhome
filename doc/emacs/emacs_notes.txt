@@ -322,6 +322,10 @@ refactor:
 C-c C-e                                        elpy-multiedit-python-symbol-at-point (prefix use syntactic)
 C-c C-r                                        elpy-refactor (complex)
 
+debugging:
+M-x pdb -> python -m pdb <file>
+C-x C-a C-<cmd>, in gud, just <cmd>            check http://pymotw.com/2/pdb/
+
 interactive python:
 C-c C-z                                        elpy-shell-switch-to-shell
 C-c C-c                                        elpy-shell-send-region-or-buffer
