@@ -27,7 +27,7 @@ package lists will not be re-downloaded in order to locate PACKAGE."
     (if (or (assoc package package-archive-contents) no-refresh)
         (package-install package)
       (package-refresh-contents)
-      (require-package package min-version t))))
+      (my-require-package package min-version t))))
 
 
 ;;; fire up
