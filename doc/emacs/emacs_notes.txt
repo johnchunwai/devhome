@@ -58,6 +58,11 @@ C-M-b                                         backward-sexp
 C-M-k                                         kill-sexp
 C-M-t                                         
 
+file local variable
+-------------------
+M-x add-file-local-variable-prop-line        eg. lexical-binding t
+
+
 bookmark and register
 ----------------------
 C-x r m                                       set a bookmark

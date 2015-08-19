@@ -4,6 +4,7 @@
 
 # hidden and exclusions
 .*
+!.emacs.d/lisp/
 !.emacs.d/**/google-c-style-mod.el
 !.gitignore
 

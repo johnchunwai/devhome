@@ -10,58 +10,42 @@
 ;;     - install doc/python/elpy-requirements.txt (ref: doc/python/py_notes.txt)
 
 ;;; Commentary:
-;; Create this while learning emacs.
+;; Create this while learning emacs. Referencing structure from https://github.com/purcell/emacs.d
 
 ;;; Code:
+
+;;; Sanity checks
 (setq debug-on-error t)
 
-(when (version< emacs-version "24.5.1")
-  (error "This init file requires at least GNU Emacs 24.5.1, but you're running %s" emacs-version))
+(let ((minver "24")
+      (myver "24.5.1"))
+  (when (version< emacs-version minver)
+    (error "This init file requires at least GNU Emacs %s. Please upgrade." minver))
+  (when (version< emacs-version myver)
+    (message "This init file is created under GNU Emacs %s. Please upgrade if you experience any issues."
+             myver)))
 
-;;;
-;;; load path
-;;;
-(require 'cl-lib)
-
-(defun show-file-name ()
-  "Show the full path file name in the minibuffer and copy in clipboard."
-  (interactive)
-  (message (buffer-file-name))
-  (kill-new (convert-standard-filename (expand-file-name buffer-file-name))))
-
-(defun my-os-neutral-abs-subdir (subdir dir)
-  "Return absolute OS specific path for SUBDIR under DIR"
-  (interactive)
-  (convert-standard-filename (expand-file-name subdir dir)))
-
-(defun my-create-dir-if-not-exist (dir)
-  "Create DIR if not already exist."
-  (unless (file-accessible-directory-p dir)
-    (make-directory dir)))
-
+;;; Bootstrap
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ;; (let ((default-directory
 ;;         (my-os-neutral-abs-subdir "site-lisp/" user-emacs-directory)))
 ;;   (my-create-dir-if-not-exist default-directory)
 ;;   (normal-top-level-add-subdirs-to-load-path))
+(require 'init-utils)
+(require 'init-elpa)
+(require 'init-use-package)
 
 
 ;;;
 ;;; package
 ;;;
 ;; package repository
-(require 'package)
-;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
-(setq package-enable-at-startup nil)
-;; initializing packages
-(package-initialize)
+
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my-packages
   '(
     el-get                              ; allow us to install packages from github and other sources
-    use-package                         ; great for managing packages
     multiple-cursors                    ; multiple points selection
     zenburn-theme                       ; dark theme
     yasnippet                           ; template autofill
@@ -271,11 +255,7 @@
   )
 
 (my-install-packages)
-;; init use-package
-;; check out the github page for all info for use-package
-(eval-when-compile
-  (require 'use-package)
-  (setq use-package-always-ensure t))
+
 
 ;; get irony-eldoc from https://github.com/johnchunwai/irony-eldoc because
 ;; the melpa package has bug for new emacs
