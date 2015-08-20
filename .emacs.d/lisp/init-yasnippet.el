@@ -3,9 +3,10 @@
 ;;; Code:
 
 (use-package yasnippet
-  :config
-  (message "This is evaluated when `foo' is loaded")
+  :commands (yas-global-mode)
+  :init
   (yas-global-mode 1)
+  :config
   ;; so tab completion works in terminal
   (defun my-yas-term-mode-hook () (setq yas-dont-activate t))
   (add-hook 'term-mode-hook #'my-yas-term-mode-hook t)
