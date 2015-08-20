@@ -4,9 +4,12 @@
 
 # hidden and exclusions
 .*
-!.emacs.d/lisp/
-!.emacs.d/**/google-c-style-mod.el
 !.gitignore
+!.emacs.d/
+.emacs.d/*
+!.emacs.d/init.el
+!.emacs.d/google-c-style-mod.el
+!.emacs.d/lisp/
 
 # executables
 *.exe
