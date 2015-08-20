@@ -3,7 +3,7 @@
 ;;; Code:
 (require 'cl-lib)
 
-(defun show-file-name ()
+(defun my-show-file-name ()
   "Show the full path file name in the minibuffer and copy in clipboard."
   (interactive)
   (message (buffer-file-name))

@@ -14,7 +14,9 @@
 
 ;;; Code:
 
+;;;
 ;;; Sanity checks
+;;;
 (setq debug-on-error t)
 
 (let ((minver "24")
@@ -25,7 +27,9 @@
     (message "This init file is created under GNU Emacs %s. Please upgrade if you experience any issues."
              myver)))
 
+;;;
 ;;; Bootstrap
+;;;
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ;; (let ((default-directory
 ;;         (my-os-neutral-abs-subdir "site-lisp/" user-emacs-directory)))
@@ -35,20 +39,25 @@
 (require 'init-elpa)
 (require 'init-use-package)
 
+;;;
+;;; user can provide an optional `init-preload-local.el'
+;;;
+(require 'init-preload-local nil t)
 
 ;;;
-;;; package
+;;; init packages
 ;;;
+(require 'init-el-get)
+(require 'init-yasnippet)
+
 ;; package repository
 
 ;; for automatic install packages if not already installed on new machines
 ;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my-packages
   '(
-    el-get                              ; allow us to install packages from github and other sources
     multiple-cursors                    ; multiple points selection
     zenburn-theme                       ; dark theme
-    yasnippet                           ; template autofill
     company                             ; autocomplete mode
     irony                               ; C++ autocomplete using company and yasnippet
     company-irony                       ; make irony use company mode
@@ -192,11 +201,6 @@
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-  ;; init yasnippet
-  (yas-global-mode 1)
-  ;; (let ((my-snippet-dir (my-os-neutral-abs-subdir "my-snippet" user-emacs-directory)))
-  ;;   (yas-load-directory my-snippet-dir))
-  (add-hook 'term-mode-hook (lambda () (setq yas-dont-activate t))) ; so tab-complete works in terminal
   ;; company mode for all buffers (optional)
   (global-company-mode)
   (setq company-tooltip-align-annotations t)
@@ -224,6 +228,7 @@
   (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
   ;; init flycheck
   (global-flycheck-mode)
+  (setq flycheck-emacs-lisp-load-path 'inherit)
   ;; init flycheck-irony
   (with-eval-after-load 'flycheck
     (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
