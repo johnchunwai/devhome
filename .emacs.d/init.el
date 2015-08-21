@@ -49,6 +49,7 @@
 ;;;
 (require 'init-el-get)
 (require 'init-yasnippet)
+(require 'init-company)
 
 ;; package repository
 
@@ -58,7 +59,6 @@
   '(
     multiple-cursors                    ; multiple points selection
     zenburn-theme                       ; dark theme
-    company                             ; autocomplete mode
     irony                               ; C++ autocomplete using company and yasnippet
     company-irony                       ; make irony use company mode
     company-irony-c-headers             ; irony autocomplete headers
