@@ -48,6 +48,8 @@
 ;;; init packages
 ;;;
 (require 'init-el-get)
+(require 'init-hydra)
+(require 'init-avy)
 (require 'init-yasnippet)
 (require 'init-company)
 
@@ -64,8 +66,6 @@
     company-irony-c-headers             ; irony autocomplete headers
     flycheck                            ; error checking in real time
     flycheck-irony                      ; error check using irony
-    hydra                               ; make emacs bindings that stick around
-    avy                                 ; jump to things tree-style
     ace-window                          ; easy select window to switch to
     ace-link                            ; quickly follow links in emacs
     swiper                              ; search with overview and ido replacement that is more efficient
@@ -117,21 +117,6 @@
   (set-face-attribute 'highlight nil :background "#222")
   ;; font - download dejavu sans mono from the web and install
   (set-face-attribute 'default nil :font "DejaVu Sans Mono")
-  ;; init hydra
-  ;; hydra is so awesome, check the community wiki for all the hydra snippets to use
-  ;; https://github.com/abo-abo/hydra/wiki
-  ;; init avy
-  (avy-setup-default)
-  (setq avy-style 'pre)
-  (set-face-attribute 'avy-lead-face-0 nil :foreground "#FFEBCD" :background "#5F9EA0") ; non-term lead char
-  (set-face-attribute 'avy-lead-face nil :foreground "#FFEBCD" :background "#5F9EA0") ; lead char
-  (set-face-attribute 'avy-lead-face-1 nil :foreground "white" :background "#9370db") ; matched lead char
-  ;; (set-face-attribute 'avy-lead-face-2 nil :foreground "white" :background "#f86bf3") ; no idea
-  (global-set-key (kbd "M-g g") 'avy-goto-line)
-  (global-set-key (kbd "M-g w") 'avy-goto-word-1)
-  (global-set-key (kbd "M-g e") 'avy-goto-word-0)
-  (global-set-key (kbd "C-:") 'avy-goto-char)
-  (global-set-key (kbd "C-'") 'avy-goto-char-2)
   ;; init ace-link
   (ace-link-setup-default)
   (add-hook 'org-mode-hook (lambda () (define-key org-mode-map (kbd "M-o") 'ace-link-org)))
@@ -201,10 +186,6 @@
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-  ;; company mode for all buffers (optional)
-  (global-company-mode)
-  (setq company-tooltip-align-annotations t)
-  (setq company-idle-delay 0)
   ;; init irony
   ;; do M-x irony-install-server when first use
   (setq w32-pipe-read-delay 0)

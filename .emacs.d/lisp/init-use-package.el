@@ -10,6 +10,7 @@
   (require 'use-package)
   (setq use-package-always-ensure t)
   (setq use-package-verbose t))
+(require 'bind-key)
 
 
 (provide 'init-use-package)
