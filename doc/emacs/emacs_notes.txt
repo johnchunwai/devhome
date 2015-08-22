@@ -8,6 +8,8 @@ Prerequisites
   - add mingw64 to path
   - generate .clang_complete file
   - if irony-install-server fail, may have to clean temp folder or install clang on windows natively
+- install Gnu Global for ggtags
+- Env setup from ../../doc/python/py_notes.txt
 
 
 debug .emacs
@@ -230,6 +232,7 @@ ggtags
 ------
 !!! For C++ project, don't use ctags !!!
 
+M-x gg-create-tags                             create tags
 M-.                                            ggtags-find-tag-dwim (also prompts for tagging)
 M-]                                            ggtags-find-reference
 C-M-.                                          ggtags-find-tag-regexp

@@ -4,8 +4,10 @@
 
 # hidden and exclusions
 .*
+/*
 !.gitignore
 !.emacs.d/
+!doc/
 .emacs.d/*
 !.emacs.d/init.el
 !.emacs.d/google-c-style-mod.el
@@ -15,5 +17,3 @@
 *.exe
 *.out
 
-# vim junk
-_viminfo

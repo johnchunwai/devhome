@@ -2,8 +2,25 @@ Env setup
 ---------
 - add python/Script to PATH (or use python -m pip instead of just pip)
 - pip install virtualenv
-- pip install virtualenvwrapper-win
+  - pip install virtualenvwrapper-win for windows/msys
+  - pip install virtualenvwrapper for msys2
 - add env variable WORKON_HOME for storing virtualenv environment managed by virtualenvwrapper
+- for msys2:
+  - add to .bashrc:
+        export WORKON_HOME=<WORKON_HOME above in unix format>
+        source virtualenvwrapper.sh
+  - modify virtualenvwrapper.sh:
+        change:
+            if [ "$OS" = "Windows_NT" ] && [ "$MSYSTEM" = "MINGW32" ]
+        to:
+            if [[ "$OS" = "Windows_NT"  && ( "$MSYSTEM" = "MINGW32"  ||  "$MSYSTEM" = "MSYS" )]]
+  - after source virtualenvwrapper.sh, modify site-packages/virtualenvwrapper/user_scripts.py:
+        change:
+            os.environ.get('MSYSTEM') == 'MINGW32':
+        to:
+            os.environ.get('MSYSTEM') == 'MINGW32' or os.environ.get('MSYSTEM') == 'MSYS':
+- msys2 and windows venv must be separate, use the pip freeze/install -r command to clone venv
+- msys can use the same venv as windows
 
 virtualenvwrapper
 -----------------
