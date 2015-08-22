@@ -1,4 +1,4 @@
-;;; init-yasnippet --- template autofill  -*- lexical-binding: t; -*-
+;;; init-yasnippet.el --- template autofill  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

@@ -1,4 +1,4 @@
-;;; init-hydra --- make emacs bindings that stick around  -*- lexical-binding: t; -*-
+;;; init-hydra.el --- make emacs bindings that stick around  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

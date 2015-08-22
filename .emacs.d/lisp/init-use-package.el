@@ -1,4 +1,4 @@
-;;; init-use-package --- init use-package  -*- lexical-binding: t; -*-
+;;; init-use-package.el --- init use-package  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Must be done before all other packages as they all use this.

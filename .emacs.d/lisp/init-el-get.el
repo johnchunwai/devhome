@@ -1,4 +1,4 @@
-;;; init-el-get --- install packages from github or other sources  -*- lexical-binding: t; -*-
+;;; init-el-get.el --- install packages from github or other sources  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

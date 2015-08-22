@@ -50,6 +50,13 @@
 (require 'init-el-get)
 (require 'init-hydra)
 (require 'init-avy)
+(require 'init-ace-link)
+(require 'init-ace-window)
+(require 'init-golden-ratio)
+(require 'init-swiper)
+(require 'init-counsel)
+(require 'init-smex)
+(require 'init-projectile)
 (require 'init-yasnippet)
 (require 'init-company)
 
@@ -66,12 +73,7 @@
     company-irony-c-headers             ; irony autocomplete headers
     flycheck                            ; error checking in real time
     flycheck-irony                      ; error check using irony
-    ace-window                          ; easy select window to switch to
-    ace-link                            ; quickly follow links in emacs
-    swiper                              ; search with overview and ido replacement that is more efficient
-    counsel                             ; convenience replacement functions using ivy
     smartparens                         ; smart parentheses
-    golden-ratio                        ; auto resize windows to golden ratio
     ))
 
 (defun my-install-packages ()
@@ -117,75 +119,6 @@
   (set-face-attribute 'highlight nil :background "#222")
   ;; font - download dejavu sans mono from the web and install
   (set-face-attribute 'default nil :font "DejaVu Sans Mono")
-  ;; init ace-link
-  (ace-link-setup-default)
-  (add-hook 'org-mode-hook (lambda () (define-key org-mode-map (kbd "M-o") 'ace-link-org)))
-  ;; init ace-window
-  (use-package ace-window
-    :ensure t
-    :defer 1
-    :config
-    (set-face-attribute 'aw-leading-char-face nil :foreground "deep sky blue" :weight 'bold :height 3.0)
-    (set-face-attribute 'aw-mode-line-face nil :inherit 'mode-line-buffer-id :foreground "lawn green")
-    (setq aw-keys   '(?a ?s ?d ?f ?j ?k ?l)
-          aw-dispatch-always t
-          aw-dispatch-alist
-          '((?x aw-delete-window     "Ace - Delete Window")
-            (?c aw-swap-window       "Ace - Swap Window")
-            (?n aw-flip-window)
-            (?v aw-split-window-vert "Ace - Split Vert Window")
-            (?h aw-split-window-horz "Ace - Split Horz Window")
-            (?m delete-other-windows "Ace - Maximize Window")
-            (?g delete-other-windows)
-            (?b balance-windows)
-            (?u winner-undo)
-            (?r winner-redo)))
-
-    (when (package-installed-p 'hydra)
-      (defhydra hydra-window-size (:color red)
-        "Windows size"
-        ("h" shrink-window-horizontally "shrink horizontal")
-        ("j" shrink-window "shrink vertical")
-        ("k" enlarge-window "enlarge vertical")
-        ("l" enlarge-window-horizontally "enlarge horizontal"))
-      (defhydra hydra-window-frame (:color red)
-        "Frame"
-        ("f" make-frame "new frame")
-        ("x" delete-frame "delete frame"))
-      (defhydra hydra-window-scroll (:color red)
-        "Scroll other window"
-        ("n" joe-scroll-other-window "scroll")
-        ("p" joe-scroll-other-window-down "scroll down"))
-      (add-to-list 'aw-dispatch-alist '(?w hydra-window-size/body) t)
-      (add-to-list 'aw-dispatch-alist '(?o hydra-window-scroll/body) t)
-      (add-to-list 'aw-dispatch-alist '(?\; hydra-window-frame/body) t))
-    (ace-window-display-mode t))
-  (global-set-key (kbd "M-p") 'ace-window)
-  ;; init swiper
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq confirm-nonexistent-file-or-buffer t)
-  ;; (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))) ; fuzzy completion
-  (setq ivy-format-function 'my-ivy-format-function)
-  (global-set-key (kbd "C-s") 'swiper)
-  (global-set-key (kbd "C-r") 'swiper)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  (global-set-key (kbd "<f6>") 'ivy-resume)
-  (define-key ivy-minibuffer-map (kbd "TAB") 'ivy-partial)
-  ;; init counsel
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-h f") 'counsel-describe-function)
-  (global-set-key (kbd "C-h v") 'counsel-describe-variable)
-  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "C-h S") 'counsel-info-lookup-symbol)
-  (global-set-key (kbd "C-M-s") 'counsel-git-grep)
-  ;; init smex
-  (setq smex-completion-method 'ivy)
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   ;; init irony
   ;; do M-x irony-install-server when first use
   (setq w32-pipe-read-delay 0)
@@ -213,22 +146,12 @@
   ;; init flycheck-irony
   (with-eval-after-load 'flycheck
     (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-  ;; init golden-ratio
-  (require 'golden-ratio)
-  (setq golden-ratio-auto-scale t)
-  (add-to-list 'golden-ratio-extra-commands 'ace-window)
-  (golden-ratio-mode 1)
+
   (use-package ggtags
     :config
     (add-hook 'c-mode-common-hook (lambda ()
                                     (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
                                       (ggtags-mode 1)))))
-  (use-package projectile
-    :config
-    (setq projectile-indexing-method 'alien)
-    (with-eval-after-load
-        (setq projectile-completion-system 'ivy))
-    (projectile-global-mode))
 
   (use-package elpy
     :init
@@ -252,14 +175,6 @@
   :type github
   :feature irony-eldoc
   :pkgname "johnchunwai/irony-eldoc")
-;; use a custom branch of smex to use ivy backend
-(el-get-bundle! smex
-  :description "M-x interface with Ido-style fuzzy matching."
-  :website "https://github.com/abo-abo/smex"
-  :type github
-  :feature smex
-  :pkgname "abo-abo/smex"
-  :post-init (smex-initialize))
 
 (my-package-config)
 
@@ -299,7 +214,7 @@
 (load "~/.emacs.d/google-c-style-mod")
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
-(global-superword-mode t)
+(global-subword-mode t)
 ;;; autocomplete
 ;; parenthesis stuff
 (show-paren-mode 1)

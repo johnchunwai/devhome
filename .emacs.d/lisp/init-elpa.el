@@ -1,4 +1,4 @@
-;;; init-elpa --- init package repo and stuff  -*- lexical-binding: t; -*-
+;;; init-elpa.el --- init package repo and stuff  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

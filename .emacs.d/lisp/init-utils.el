@@ -1,4 +1,4 @@
-;;; init-utils --- utility functions  -*- lexical-binding: t; -*-
+;;; init-utils.el --- utility functions  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 (require 'cl-lib)

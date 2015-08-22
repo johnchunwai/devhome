@@ -1,4 +1,4 @@
-;;; init-company --- autocomplete  -*- lexical-binding: t; -*-
+;;; init-company.el --- autocomplete  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
