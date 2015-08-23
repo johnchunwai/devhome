@@ -6,6 +6,8 @@
   :commands (ace-window)
   :bind ("M-p" . ace-window)
   :config
+  (defun my-ace-window-help ()
+    (message "x-del, c-swap, n-flip, v-split-vert, h-split-hori, m-max, g-del-other, b-balance, u-undo, r-redo, w-resize, x-frame"))
   (set-face-attribute 'aw-leading-char-face nil :foreground "deep sky blue" :weight 'bold :height 3.0)
   (set-face-attribute 'aw-mode-line-face nil :inherit 'mode-line-buffer-id :foreground "lawn green")
   (setq aw-keys   '(?a ?s ?d ?f ?j ?k ?l)
@@ -20,7 +22,8 @@
           (?g delete-other-windows)
           (?b balance-windows)
           (?u winner-undo)
-          (?r winner-redo)))
+          (?r winner-redo)
+          (?? my-ace-window-help)))
 
   (when (package-installed-p 'hydra)
     (defhydra hydra-window-size (:color red)

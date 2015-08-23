@@ -3,7 +3,7 @@
 ;;; Code:
 
 ;; use a custom branch of smex to use ivy backend
-(el-get-bundle! smex
+(el-get-bundle smex
   :description "M-x interface with Ido-style fuzzy matching."
   :website "https://github.com/abo-abo/smex"
   :type github

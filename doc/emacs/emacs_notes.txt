@@ -186,6 +186,7 @@ M-q, M-< M-q (swiper)                         query replace curr/whole buffer
 M-o/C-m                                       ivy-dispatch-done/ivy-done
 C-M-n, C-M-p                                  ivy-next/prev-line-and-call
 C-u C-j                                       ignore completion and use what's entered (create file)
+M-w (during completion)                       add suggestions to kill ring
 C-./C-, (help)                                jump to def/jump to info
 M-q (file)                                    ivy-toggle-regexp-quote (useful when file contains dot)
 C-c C-r or <f6>                               ivy-resume

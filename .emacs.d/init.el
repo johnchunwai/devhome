@@ -59,20 +59,17 @@
 (require 'init-projectile)
 (require 'init-yasnippet)
 (require 'init-company)
+(require 'init-ggtags)
+(require 'init-elpy)
+(require 'init-irony)
 
 ;; package repository
 
 ;; for automatic install packages if not already installed on new machines
-;; irony requires cmake to be installed (google), and libclang (google)
 (defvar my-packages
   '(
     multiple-cursors                    ; multiple points selection
     zenburn-theme                       ; dark theme
-    irony                               ; C++ autocomplete using company and yasnippet
-    company-irony                       ; make irony use company mode
-    company-irony-c-headers             ; irony autocomplete headers
-    flycheck                            ; error checking in real time
-    flycheck-irony                      ; error check using irony
     smartparens                         ; smart parentheses
     ))
 
@@ -84,24 +81,6 @@
       (message "Installing %d missing package(s)" (length missing-packages))
       (package-refresh-contents)
       (mapc #'package-install missing-packages))))
-
-(defun my-irony-mode-hook ()
-  "Replace the `completion-at-point' and `complete-symbol' with irony's functions."
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-
-(defun my-ivy-format-function (cands)
-  "Add an arrow to the front of current selected candidate among CANDS."
-  (let ((i -1))
-    (mapconcat
-     (lambda (s)
-       (concat (if (eq (cl-incf i) ivy--index)
-                   "> "
-                 "  ")
-               s))
-     cands "\n")))
 
 ;; package configs
 (defun my-package-config ()
@@ -119,62 +98,10 @@
   (set-face-attribute 'highlight nil :background "#222")
   ;; font - download dejavu sans mono from the web and install
   (set-face-attribute 'default nil :font "DejaVu Sans Mono")
-  ;; init irony
-  ;; do M-x irony-install-server when first use
-  (setq w32-pipe-read-delay 0)
-  ;; When .emacs.d is wiped and irony package version is updated, `irony-install-server' will fail.
-  ;; This is because, at least in windows version, cmake cache are stored in system temp directory
-  ;; instead of temp/irony-build-<server-version> directory because of the missing slash.
-  ;; Even if it uses temp/irony-build-<server-version>, it will still fail if package version updates
-  ;; but .emacs wiped. Therefore, we're putting the build folder in irony folder inside `irony-user-dir'.
-  (setq irony-server-build-dir (my-os-neutral-abs-subdir (format "build-%s/" (irony-version)) irony-user-dir))
-  (dolist (mode '(c++-mode-hook c-mode-hook objc-mode-hook))
-    (add-hook mode 'irony-mode))
-  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (add-hook 'irony-mode-hook 'irony-eldoc)
-  ;; init company-irony
-  (with-eval-after-load 'company
-    (add-to-list 'company-backends '(company-irony-c-headers company-irony)))
-  ;; adds CC special commands to `company-begin-commands' in order to
-  ;; trigger completion at interesting places, such as after scope operator
-  ;; 	std::
-  (add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
-  ;; init flycheck
-  (global-flycheck-mode)
-  (setq flycheck-emacs-lisp-load-path 'inherit)
-  ;; init flycheck-irony
-  (with-eval-after-load 'flycheck
-    (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-  (use-package ggtags
-    :config
-    (add-hook 'c-mode-common-hook (lambda ()
-                                    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-                                      (ggtags-mode 1)))))
-
-  (use-package elpy
-    :init
-    (with-eval-after-load 'python (elpy-enable))
-    :config
-    ;; (setq elpy-rpc-backend "jedi")
-    (when (require 'flycheck nil t)
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (add-hook 'elpy-mode-hook 'flycheck-mode)))
   )
 
 (my-install-packages)
 
-
-;; get irony-eldoc from https://github.com/johnchunwai/irony-eldoc because
-;; the melpa package has bug for new emacs
-(require 'el-get)
-(el-get-bundle! irony-eldoc
-  :description "irony-mode support for eldoc-mode"
-  :website "https://github.com/johnchunwai/irony-eldoc"
-  :type github
-  :feature irony-eldoc
-  :pkgname "johnchunwai/irony-eldoc")
 
 (my-package-config)
 
