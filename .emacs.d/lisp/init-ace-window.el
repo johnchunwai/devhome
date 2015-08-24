@@ -3,7 +3,6 @@
 ;;; Code:
 
 (use-package ace-window
-  :commands (ace-window)
   :bind ("M-p" . ace-window)
   :config
   (defun my-ace-window-help ()

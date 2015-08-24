@@ -48,6 +48,7 @@
 ;;; init packages
 ;;;
 (require 'init-el-get)
+(require 'init-ag)
 (require 'init-hydra)
 (require 'init-avy)
 (require 'init-ace-link)
@@ -56,54 +57,15 @@
 (require 'init-swiper)
 (require 'init-counsel)
 (require 'init-smex)
+(require 'init-multiple-cursors)
 (require 'init-projectile)
+(require 'init-smartparens)
 (require 'init-yasnippet)
 (require 'init-company)
 (require 'init-ggtags)
 (require 'init-elpy)
 (require 'init-irony)
-
-;; package repository
-
-;; for automatic install packages if not already installed on new machines
-(defvar my-packages
-  '(
-    multiple-cursors                    ; multiple points selection
-    zenburn-theme                       ; dark theme
-    smartparens                         ; smart parentheses
-    ))
-
-(defun my-install-packages ()
-  "Install all packages defined in `my-packages'."
-  (interactive)
-  (let ((missing-packages (cl-remove-if #'package-installed-p my-packages)))
-    (when missing-packages
-      (message "Installing %d missing package(s)" (length missing-packages))
-      (package-refresh-contents)
-      (mapc #'package-install missing-packages))))
-
-;; package configs
-(defun my-package-config ()
-  (interactive)
-  ;; init ag
-  (use-package ag)
-  ;; multiple-cursors
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-unset-key (kbd "<C-down-mouse-1>"))
-  (global-set-key (kbd "<C-down-mouse-1>") 'mc/add-cursor-on-click)
-  (global-set-key (kbd "<C-mouse-1>") 'ignore)
-  ;; zenburn theme
-  (load-theme 'zenburn t)
-  (set-face-attribute 'highlight nil :background "#222")
-  ;; font - download dejavu sans mono from the web and install
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono")
-  )
-
-(my-install-packages)
-
-
-(my-package-config)
+(require 'init-theme)
 
 
 ;; save/restore session automatically
@@ -145,12 +107,6 @@
 ;;; autocomplete
 ;; parenthesis stuff
 (show-paren-mode 1)
-(smartparens-global-mode t)
-(require 'smartparens-config)
-(global-set-key (kbd "C-0") 'sp-forward-slurp-sexp)
-(global-set-key (kbd "C-9") 'sp-backward-slurp-sexp)
-(global-set-key (kbd "C-}") 'sp-forward-barf-sexp)
-(global-set-key (kbd "C-{") 'sp-backward-barf-sexp)
 
 ;;;
 ;;; look and feel
