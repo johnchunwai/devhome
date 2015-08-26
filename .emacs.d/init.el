@@ -48,6 +48,7 @@
 ;;; init packages
 ;;;
 (require 'init-el-get)
+(require 'init-misc)
 (require 'init-ag)
 (require 'init-hydra)
 (require 'init-avy)
@@ -58,6 +59,8 @@
 (require 'init-counsel)
 (require 'init-smex)
 (require 'init-multiple-cursors)
+(require 'init-coding-general)
+(require 'init-coding-c)
 (require 'init-projectile)
 (require 'init-smartparens)
 (require 'init-yasnippet)
@@ -66,78 +69,12 @@
 (require 'init-elpy)
 (require 'init-irony)
 (require 'init-theme)
-
-
-;; save/restore session automatically
-(desktop-save-mode 1)
-(setq history-length 250)
-(add-to-list 'desktop-globals-to-save 'file-name-history)
-(setq desktop-buffers-not-to-save
-      (concat "\\("
-              "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-              "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-              "\\)$"))
-(add-to-list 'desktop-modes-not-to-save 'dired-mode)
-(add-to-list 'desktop-modes-not-to-save 'Info-mode)
-(add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
-(add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
+(require 'init-desktop-save)
 
 ;;;
-;;; enable commands by default
+;;; user can provide an optional `init-local.el'
 ;;;
-;; enable region uppercase and lowercase
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-
-;;;
-;;; coding
-;;;
-;; tabs
-(setq-default indent-tabs-mode nil)
-;; defines how wide to display tabs
-(setq-default tab-width 4)
-;; defines where the cursor stops when pressing TAB as indent-relative's fallback
-(setq tab-stop-list (number-sequence 4 120 4))
-(setq-default c-basic-offset 4)
-;; google-c-style is download and modified for my own needs
-(load "~/.emacs.d/google-c-style-mod")
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
-(global-subword-mode t)
-;;; autocomplete
-;; parenthesis stuff
-(show-paren-mode 1)
-
-;;;
-;;; look and feel
-;;;
-;; minimalism
-;; (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(defalias 'yes-or-no-p 'y-or-n-p)
-;; show column position
-(setq column-number-mode t)
-
-;;; misc
-;; make commands like less, git diff works in shell mode
-(setenv "PAGER" "cat")
-;; .h to open in c++ mode then c mode
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-;; better key bindings
-(global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
-
-(setq delete-by-moving-to-trash t           ; use recycle bin
-      save-interprogram-paste-before-kill t ; put clipboard item from other program in kill ring before kill
-      require-final-newline t               ; add new line at EOF when save
-      apropos-do-all t                      ; apropos checks more
-      visible-bell t                        ; flash buffer instead of beep on error
-      load-prefer-newer t                   ; load prefers newest version of a file (eg. a.el vs a.elc)
-      ;; put all emacs back up files (eg. a.txt~) into same directory
-      backup-directory-alist `(("." . ,(my-os-neutral-abs-subdir "backups" user-emacs-directory)))
-      )
-;; turn on recent file list, call recentf-open-files to list and open
-(recentf-mode 1)
+(require 'init-local nil t)
 
 (provide 'init)
 

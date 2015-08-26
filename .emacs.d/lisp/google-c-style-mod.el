@@ -1,4 +1,4 @@
-;;; google-c-style.el --- Google's C/C++ style for c-mode
+;;; google-c-style-mod.el --- Google's C/C++ style for c-mode
 
 ;; Keywords: c, tools
 
@@ -144,5 +144,5 @@ Suitable for inclusion in `c-offsets-alist'."
   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
   (define-key c-mode-base-map [ret] 'newline-and-indent))
 
-(provide 'google-c-style)
-;;; google-c-style.el ends here
+(provide 'google-c-style-mod)
+;;; google-c-style-mod.el ends here
