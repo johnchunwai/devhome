@@ -18,4 +18,5 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND='253'
     - for msys2, comment out export PATH so it will use the most recent system one
     - change EDITOR as needed
     - add shortcut for directory by export and then eg. cd $sec_test_dir
-    
+    - for python, add virtualenv plugin
+    - don't add virtualenvwrapper plugin if already installed (ref to python_notes.txt)
