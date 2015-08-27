@@ -10,6 +10,9 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (bind-key "C-x C-b" #'ibuffer-other-window)
 
+;; max frame on startup
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 ;; make commands like less, git diff works in shell mode
 (setenv "PAGER" "cat")
 
