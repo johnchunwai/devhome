@@ -149,6 +149,8 @@ M-|                                           shell command on region (selection
 C-x d                                         Dired
     i                                             insert subdirectory to work on both
     p, n                                          move up/down
+    +                                             add directory
+    o                                             visit in other window
     RET                                           visit selected
     =                                             compare file with a prompted one
     m, % m, % g                                   mark single/filename regex/content regex
