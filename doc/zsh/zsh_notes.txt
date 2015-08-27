@@ -1,5 +1,8 @@
-- for msys2 use pacman
+- for msys2, use pacman
 - install oh-my-zsh
+- for msys2:
+  - fix mingw32_shell.bat, mingw64_shell.bat, msys2_shell.bat:
+    - change bash to zsh
 - install powerlevel9k theme
 - install patched powerline fonts from https://github.com/powerline/fonts
   - my customization in .zshrc:
