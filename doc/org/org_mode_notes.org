@@ -1,0 +1,57 @@
+* Tasks: first lvl heading starts with 1 star, 2nd lvl 2 stars etc
+** M-RET creates a headline same lvl as above, M-right/left to demote/promote a heading
+*** S-M-right/left to demote/promote a subtree
+*** M-up/down move subtree up/down
+
+C-o to create blank line
+
+** TODO todo's are always headlines, M-S-RET to insert todo
+** DONE mark this done by C-c C-t
+   CLOSED: [2015-08-28 Fri 00:07]
+** TODO top task super looooooooooooooooooonnnnnnnnnnnnnnnnnnnnnggggggggggggggggg looooooooooooooooooonnnnnnnnnnnnnnnnnnnnnggggggggggggggggg looooooooooooooooooonnnnnnnnnnnnnnnnnnnnnggggggggggggggggg
+*** TODO subtask 1
+*** TODO subtask 2
+**** subheadings for subtask 2
+
+* basics
+
+body test goes here
+
+** exporting
+
+C-c C-e org-export-dispatch
+
+** links
+
+*** weblink
+
+some links by square bracket
+[[https://github.com/johnchunwai/devhome][my emacs devhome repo]]
+C-c C-o for org-open-at-point or M-o for ace-link
+
+*** link to other doc
+
+C-c l org-insert-link from other files, then C-c C-l org-insert-link to add it [[file:~/.emacs.d/init.el::(require%20'init-org)][require org at init.el]]
+
+** overviews of doc
+
+TAB to collapse/expand a subtree
+S-TAB to collapse/expand whole doc
+
+* advanced
+
+** global agenda list
+
+setq org-agenda-files '("file1" "file2" "etc") or C-c [, C-c ] to add/remove files to the global list
+
+C-c a org-agenda
+C-c a t to list all TODOs
+
+** schedule TODO
+
+C-c C-s org-schedule
+
+*** TODO test scheduled task
+    SCHEDULED: <2015-09-16 Wed>
+
+C-c a a to list agenda

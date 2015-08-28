@@ -49,6 +49,7 @@
 ;;;
 (require 'init-el-get)
 (require 'init-misc)
+(require 'init-org)
 (require 'init-ag)
 (require 'init-hydra)
 (require 'init-avy)
