@@ -28,6 +28,7 @@
       backup-directory-alist `(("." . ,(my-os-neutral-abs-subdir "backups" user-emacs-directory)))
       ;; defines where the cursor stops when pressing TAB as indent-relative's fallback
       tab-stop-list (number-sequence 4 120 4)
+      inhibit-splash-screen t               ; disable splash screen
       )
 
 ;; minimalism

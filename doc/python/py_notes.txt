@@ -1,3 +1,4 @@
+;;; -*- mode: org; -*-
 Env setup
 ---------
 - add python/Script to PATH (or use python -m pip instead of just pip)

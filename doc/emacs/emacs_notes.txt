@@ -1,3 +1,4 @@
+;;; -*- mode: org; -*-
 Prerequisites
 =============
 - install gnu emacs

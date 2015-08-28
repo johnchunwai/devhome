@@ -1,3 +1,4 @@
+;;; -*- mode: org; -*-
 - for msys2, use pacman
 - install oh-my-zsh
 - for msys2:
