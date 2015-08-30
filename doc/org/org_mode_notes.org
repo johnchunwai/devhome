@@ -23,6 +23,8 @@ C-c C-e org-export-dispatch
 
 ** links
 
+M-o avy-link
+
 *** weblink
 
 some links by square bracket
@@ -31,12 +33,44 @@ C-c C-o for org-open-at-point or M-o for ace-link
 
 *** link to other doc
 
-C-c l org-insert-link from other files, then C-c C-l org-insert-link to add it [[file:~/.emacs.d/init.el::(require%20'init-org)][require org at init.el]]
+C-c l org-store-link from other files, then C-c C-l org-insert-link to add it [[file:~/.emacs.d/init.el::(require%20'init-org)][require org at init.el]]
+OR
+[[file:<path>::<search string escaped>][test description]<last close square bracket>
+
+*** link to same doc heading
+
+[[<search string>]<close square bracket>
+
+*** link anchor
+
+<<link anchor>> can be used to make it work with [[]]
+
+eg. [[link anchor]] link anchor
+
+*** radio target
+
+<<<radio target>>> a word or phrase that is automatically linked whenever it appears
+
+eg. pressing C-c C-c makes the above radio target as hyperlinks everywhere
 
 ** overviews of doc
 
 TAB to collapse/expand a subtree
 S-TAB to collapse/expand whole doc
+
+** checklist
+
+*** heading [1/3] [33%]    ;; (1)
+
+- [ ] item 1               ;; (2)
+- [X] item 2
+- [ ] item 3
+
+*** notes
+1) [0/0] faction; [0%] percentage
+2) [ ] not complete (with space); [X] completed
+3) C-c # - update this count for this list
+4) C-u C-c # - update counts for all lists
 
 * advanced
 
