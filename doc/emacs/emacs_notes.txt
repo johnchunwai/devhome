@@ -1,6 +1,5 @@
 ;;; -*- mode: org; -*-
-Prerequisites
-=============
+* Prerequisites
 - install gnu emacs
 - set HOME env variable either in a shell startup script or system level
 - install MinGW with MSys unix commands
@@ -12,337 +11,321 @@ Prerequisites
 - install Gnu Global for ggtags
 - Env setup from ../../doc/python/py_notes.txt
 
-
-debug .emacs
-------------
+* debug .emacs
 (setq c-echo-syntactic-information-p t)
 
-package handling
-----------------
-M-x package-install <package name>            install a package
-M-x package-TAB                               see the list of package commands
-M-x package-list-packages                     list package mode
-    i                                              mark for install
-    d                                              mark for del
-    u                                              undo mark for install/del
-    U                                              mark all package with newer version for upgrade
-    x                                              execute marked
-    r                                              refresh package list
-    f                                              filter package list
+* package handling
+- M-x package-install <package name> :: install a package
+- M-x package-TAB :: see the list of package commands
+- M-x package-list-packages :: list package mode
+  - i :: mark for install
+  - d :: mark for del
+  - u :: undo mark for install/del
+  - U :: mark all package with newer version for upgrade
+  - x :: execute marked
+  - r :: refresh package list
+  - f :: filter package list
 
+* shotcuts
 
-shotcuts
---------
-C-g							                  Cancel command
-M-x desktop-save                              save emacs session
-C-u                                           pass argument to command
-C-q <key, eg. TAB>                            quoted insert
-M-x tabify, M-x untabify                      change space to tab and vice versa
-M-:                                           execute a lisp expression
-C-c C-s                                       syntactic analysis (good for formatting)
+- C-g :: Cancel command
+- M-x desktop-save :: save emacs session
+- C-u :: pass argument to command
+- C-q <key, eg. TAB> :: quoted insert
+- M-x tabify, M-x untabify :: change space to tab and vice versa
+- M-: :: execute a lisp expression
+- C-c C-s :: syntactic analysis (good for formatting)
 
-move around
------------
-C-f, C-b, C-p, C-n                            Move right, left, up, down by 1 space
-M-f, M-b                                      Move right, left by 1 word
-M-m                                           back-to-indentation
-C-a, C-e, M-a, M-e                            Begin/end of line, begin/end of sentence
-C-M-a, C-M-e                                  Begin/end of function
-C-v, M-v                                      pagedown/pageup
-M-<, M->                                      begin/end of buffer
-C-l                                           move screen so point at mid/top/bottom of screen
-M-r                                           similar to above by move point instead of screen
-M-g c, M-g g, M-g TAB                         go to buffer pos/avy-goto-line/col
-C-SPC                                         set-mark and activate region, repeat to deactivate
-C-u C-SPC                                     go back in history to prev marks
+* move around
+- C-f, C-b, C-p, C-n :: Move right, left, up, down by 1 space
+- M-f, M-b :: Move right, left by 1 word
+- M-m :: back-to-indentation
+- C-a, C-e, M-a, M-e :: Begin/end of line, begin/end of sentence
+- C-M-a, C-M-e :: Begin/end of function
+- C-v, M-v :: pagedown/pageup
+- M-<, M-> :: begin/end of buffer
+- C-l :: move screen so point at mid/top/bottom of screen
+- M-r :: similar to above by move point instead of screen
+- M-g c, M-g g, M-g TAB :: go to buffer pos/avy-goto-line/col
+- C-SPC :: set-mark and activate region, repeat to deactivate
+- C-u C-SPC :: go back in history to prev marks
 
-C-M-f                                         forward-sexp
-C-M-b                                         backward-sexp
-C-M-k                                         kill-sexp
-C-M-t                                         
+- C-M-f :: forward-sexp
+- C-M-b :: backward-sexp
+- C-M-k :: kill-sexp
+- C-M-t :: transpose-sexp
 
-file local variable
--------------------
-M-x add-file-local-variable-prop-line        eg. lexical-binding t
+* file local variable
+- M-x add-file-local-variable-prop-line :: eg. lexical-binding t
 
+* bookmark and register
+- C-x r m :: set a bookmark
+- C-x r l :: list bookmarks
+- C-x r b :: jump back to bookmark
+- C-x r <SPC> :: save point to REG
+- C-x r w/f REG :: save win/frame config
+- C-x r j REG :: jump to register (REG is a register of choice (letter or num)
+- C-x r s REG :: save region to REG
+- C-x r i REG :: insert text from REG
+- C-x r C-h :: help for register
 
-bookmark and register
-----------------------
-C-x r m                                       set a bookmark
-C-x r l                                       list bookmarks
-C-x r b                                       jump back to bookmark
-C-x r <SPC>                                   save point to REG
-C-x r w/f REG                                 save win/frame config
-C-x r j REG                                   jump to register (REG is a register of choice (letter or num)
-C-x r s REG                                   save region to REG
-C-x r i REG                                   insert text from REG
-C-x r C-h                                     help for register
+* region
+- C-SPC :: Using the mark and the point to set the region
+- C-x h :: region whole buffer
+- C-M-h :: Region around a function
+- C-M-<SPC>, C-M-@ :: mark-sexp forward
 
+- C-down-mouse-1 :: multi-cursor at mouse pointer
+- C->, C-< :: multi-cursor for next/prev like this
 
-region
-------
-C-SPC                                         Using the mark and the point to set the region
-C-x h                                         region whole buffer
-C-M-h                                         Region around a function
-C-M-<SPC>, C-M-@                              mark-sexp forward
-
-C-down-mouse-1                                multi-cursor at mouse pointer
-C->, C-<                                      multi-cursor for next/prev like this
-
-C-M-i                                         irony complete (assume irony with company, yasnippet
-    M-<num>                                       select <num>-th suggestion
-    M-n, M-p                                      next/prev suggestion
-    C-s, C-r, C-o                                 search completions
-    f1                                            display doc
-    C-w                                           view source
-    TAB                                           yasnippet template
+- C-M-i :: irony complete (assume irony with company, yasnippet
+  - M-<num> :: select <num>-th suggestion
+  - M-n, M-p :: next/prev suggestion
+  - C-s, C-r, C-o :: search completions
+  - f1 :: display doc
+  - C-w :: view source
+  - TAB :: yasnippet template
     
-C-x C-f and C-x C-s                           Visiting (opening) and saving
-C-x b and C-x C-b                             Switching between buffers
-    o, C-o                                        open buffer swith point/not switch point
-    g                                             refresh
-    m, u                                          mark/unmark buffer
-    O                                             regex search on all marked buffer in occur window
-    M-s a Cs                                      incremental search in marked buffers
-    Q, I                                          query/regex query replace in marked buffers
-    E                                             eval form in all marked buffers
-    t                                             toggle all marked/unmarked buffers
-    =                                             diff buffer with files
-    /m                                            filter by mode
-        /g                                            add filtered as group
-        //                                            turn off filtering
-C-x k                                         Kill the current buffer
+- C-x C-f and C-x C-s :: Visiting (opening) and saving
+- C-x b and C-x C-b :: Switching between buffers
+  - o, C-o :: open buffer swith point/not switch point
+  - g :: refresh
+  - m, u :: mark/unmark buffer
+  - O :: regex search on all marked buffer in occur window
+  - M-s a Cs :: incremental search in marked buffers
+  - Q, I :: query/regex query replace in marked buffers
+  - E :: eval form in all marked buffers
+  - t :: toggle all marked/unmarked buffers
+  - = :: diff buffer with files
+  - /m :: filter by mode
+    - /g :: add filtered as group
+    - // :: turn off filtering
+- C-x k :: Kill the current buffer
 
-M-\                                           delete space between 2 words
-C-w, M-w                                      Kill region
-M-d, M-backspace                              Kill forward/bacqkward for word
-C-k, C-x backspace, C-S-backspace, M-k        kill rest of line/beginning of line/whole line/end of sentence
-C-M-k                                         kill the following balanced expression
+- M-\ :: delete space between 2 words
+- C-w, M-w :: Kill region
+- M-d, M-backspace :: Kill forward/bacqkward for word
+- C-k, C-x backspace, C-S-backspace, M-k :: kill rest of line/beginning of line/whole line/end of sentence
+- C-M-k :: kill the following balanced expression
 
-C-y, M-y                                      Yank, cycle through prev in kill ring
-C-M-\                                         indent region
-M-q                                           fill paragraph (good for formatting strings/comments)
-C-s, C-r                                      Searching forwards and backwards - repeat to search next
-C-M-s, C-M-r                                  Search with regex (MUST escape | and parentheses)
-                                              (whitespace changes from \s to \s-, no \d support)
-M-%                                           Find and replace
-M-/                                           autocomplete
+- C-y, M-y :: Yank, cycle through prev in kill ring
+- C-M-\ :: indent region
+- M-q :: fill paragraph (good for formatting strings/comments)
+- C-s, C-r :: Searching forwards and backwards - repeat to search next
+- C-M-s, C-M-r :: Search with regex (MUST escape | and parentheses)
+  (whitespace changes from \s to \s-, no \d support)
+- M-% :: Find and replace
+- M-/ :: autocomplete
 
-M-x                                           Invoking commands by name
-C-/                                           Undo
-C-g C-/                                       Redo (subsequent C-/ continues)
-M-q                                           Wrap text
-C-x C-u, C-x C-l                              Make region upper or lowercase
-C-g                                           Cancelling half-entered commands
-C-h m, C-h k, C-h f, C-h a, C-h C-h           Getting help on editing modes, keybindings and commands
-                                              (just remember C-h and read the prompt in the minibuffer)
-C-x C-c                                       Quitting Emacs
-C-x 1                                         Show only 1 window
-C-x 2                                         Split window below
-C-x 3                                         Split window to the right
-C-x 0                                         Close current window
+- M-x :: Invoking commands by name
+- C-/ :: Undo
+- C-g C-/ :: Redo (subsequent C-/ continues)
+- M-q :: Wrap text
+- C-x C-u, C-x C-l :: Make region upper or lowercase
+- C-g :: Cancelling half-entered commands
+- C-h m, C-h k, C-h f, C-h a, C-h C-h :: Getting help on editing modes, keybindings and commands
+  (just remember C-h and read the prompt in the minibuffer)
+- C-x C-c :: Quitting Emacs
+- C-x 1 :: Show only 1 window
+- C-x 2 :: Split window below
+- C-x 3 :: Split window to the right
+- C-x 0 :: Close current window
 
-M-x shell RET                                 Run shell
-    M-p/M-n                                       cycle thru commands history
-M-|                                           shell command on region (selection)
-    C-u 2 M-|                                     shell command on region replace
+- M-x shell RET :: Run shell
+  - M-p/M-n :: cycle thru commands history
+- M-| :: shell command on region (selection)
+  - C-u 2 M-| :: shell command on region replace
 
-C-x d                                         Dired
-    i                                             insert subdirectory to work on both
-    p, n                                          move up/down
-    +                                             add directory
-    o                                             visit in other window
-    RET                                           visit selected
-    =                                             compare file with a prompted one
-    m, % m, % g                                   mark single/filename regex/content regex
-    C, D, R                                       copy, del, rename
-    d, #, ~, % d                                  flag for del/auto-save files#/backup/regex
-    u                                             remove flag
-    x                                             execute flag
-    !, &                                          execute command on file(s)/async
-    q                                             quit dired mode
+- C-x d :: Dired
+  - i :: insert subdirectory to work on both
+  - p, n :: move up/down
+  - + :: add directory
+  - o :: visit in other window
+  - RET :: visit selected
+  - = :: compare file with a prompted one
+  - m, % m, % g :: mark single/filename regex/content regex
+  - C, D, R :: copy, del, rename
+  - d, #, ~, % d :: flag for del/auto-save files#/backup/regex
+  - u :: remove flag
+  - x :: execute flag
+  - !, & :: execute command on file(s)/async
+  - q :: quit dired mode
 
-M-x compile                                   build
-    M-n/M-p                                       move between compile errors
-    RET                                           show error in source
-    C-c C-f                                       show error in source, keep cursor in error
-M-x rgrep                                     search all occurences in project
-                                              same key binding as compilation
+- M-x compile :: build
+  - M-n/M-p :: move between compile errors
+  - RET :: show error in source
+  - C-c C-f :: show error in source, keep cursor in error
+- M-x rgrep :: search all occurences in project
+               same key binding as compilation
 
-flycheck
---------
-C-c ! c                                       manual flycheck buffer
-C-c ! n, C-c ! p                              flycheck-next-error, flycheck-previous-error
-C-c ! l                                       flycheck-list-errors
+* flycheck
+- C-c ! c :: manual flycheck buffer
+- C-c ! n, C-c ! p :: flycheck-next-error, flycheck-previous-error
+- C-c ! l :: flycheck-list-errors
 
-smartparens
------------
-C-0                                           sp-forward-slurp-sexp
-C-M-9                                         sp-backward-slurp-sexp
-C-}                                           sp-forward-barf-sexp
-C-{                                           sp-backward-barf-sexp
+* smartparens
+- C-0 :: sp-forward-slurp-sexp
+- C-M-9 :: sp-backward-slurp-sexp
+- C-} :: sp-forward-barf-sexp
+- C-{ :: sp-backward-barf-sexp
 
-ivy
----
-C-M-s                                         counsel-git-grep
-M-q, M-< M-q (swiper)                         query replace curr/whole buffer
-M-o/C-m                                       ivy-dispatch-done/ivy-done
-C-M-n, C-M-p                                  ivy-next/prev-line-and-call
-C-u C-j                                       ignore completion and use what's entered (create file)
-M-w (during completion)                       add suggestions to kill ring
-C-./C-, (help)                                jump to def/jump to info
-M-q (file)                                    ivy-toggle-regexp-quote (useful when file contains dot)
-C-c C-r or <f6>                               ivy-resume
-S-SPC                                         restrict to matches
-M-j                                           fill in extra stuff based on current selection
-M-n                                           paste symbol at point for search (eg. C-s M-n M-j M-j)
-//, ~                                         root, home (in file compl)
-C-m                                           ivy-done (use the current selected item)
-C-j                                           ivy-alt-done (same except: enter dir, cont for file compl)
+* ivy
+- C-s, C-r :: swiper
+- C-S-s, C-S-r :: swiper-multi
+- C-M-s :: counsel-git-grep
+- M-q, M-< M-q (swiper) :: query replace curr/whole buffer
+- M-o/C-m :: ivy-dispatch-done/ivy-done(swiper-multi: add last buffer)
+- C-M-n, C-M-p :: ivy-next(swiper-multi: add/remove buffer next/prev)/prev-line-and-call
+- C-u C-j :: ignore completion and use what's entered (create file)
+- M-w (during completion) :: add suggestions to kill ring
+- C-./C-, (help) :: jump to def/jump to info
+- M-q (file) :: ivy-toggle-regexp-quote (useful when file contains dot)
+- C-c C-r or <f6> :: ivy-resume
+- S-SPC :: restrict to matches
+- M-j :: fill in extra stuff based on current selection
+- M-n :: paste symbol at point for search (eg. C-s M-n M-j M-j)
+- //, ~ :: root, home (in file compl)
+- C-m :: ivy-done (use the current selected item)
+- C-j :: ivy-alt-done (same except: enter dir, cont for file compl)
+- C-M-m :: ivy-call (swiper-multi: add/remove buffer without exit)
+- C-M-j :: ivy-immediate-done (finish without adding more buffers)
 
-hydra
------
-C-o                                           ivy-hydra
+* hydra
+- C-o :: ivy-hydra
 
-avy
----
-C-'                                           avy-goto-char-2/swiper-avy
-C-:                                           avy-goto-char-1
-M-g w                                         avy-goto-word-1
-M-g e                                         avy-goto-word-0
+* avy
+- C-' :: avy-goto-char-2/swiper-avy
+- C-: :: avy-goto-char-1
+- M-g w :: avy-goto-word-1
+- M-g e :: avy-goto-word-0
 
-ace-window
-----------
-M-p                                           ace-window
-    x                                           del pick
-    c                                           swap pick with curr
-    v                                           split vert curr
-    h                                           split hori curr
-    n                                           select prev
-    m                                           max pick
-    g                                           max curr
-    b                                           balance windows
-    u                                           winner-undo
-    r                                           winner-redo
-C-u C-u M-p                                   del pick
+* ace-window
+- M-p :: ace-window
+  - x :: del pick
+  - c :: swap pick with curr
+  - v :: split vert curr
+  - h :: split hori curr
+  - n :: select prev
+  - m :: max pick
+  - g :: max curr
+  - b :: balance windows
+  - u :: winner-undo
+  - r :: winner-redo
+- C-u C-u M-p :: del pick
 
-Macro
------
-f3, C-x (                                      start record macro
-f4, C-x )                                      stop record macro
-f4, C-x e                                      playback macro
+* Macro
+- f3, C-x ( :: start record macro
+- f4, C-x ) :: stop record macro
+- f4, C-x e :: playback macro
 
-ggtags
-------
+* ggtags
 !!! For C++ project, don't use ctags !!!
 
-M-x gg-create-tags                             create tags
-M-.                                            ggtags-find-tag-dwim (also prompts for tagging)
-M-]                                            ggtags-find-reference
-C-M-.                                          ggtags-find-tag-regexp
+- M-x gg-create-tags :: create tags
+- M-. :: ggtags-find-tag-dwim (also prompts for tagging)
+- M-] :: ggtags-find-reference
+- C-M-. :: ggtags-find-tag-regexp
 
-C-c M-SPC                                      ggtags-save-to-register
-C-c M-%                                        ggtags-query-replace
-C-c M-/                                        ggtags-view-search-history
-C-c M-?                                        ggtags-show-definition
-C-c M-b                                        ggtags-browse-file-as-hypertext
-C-c M-f                                        ggtags-find-file
-C-c M-g                                        ggtags-grep
-C-c M-h                                        ggtags-view-tag-history
-C-c M-i                                        ggtags-idutils-query
-C-c M-j                                        ggtags-visit-project-root
-C-c M-k                                        ggtags-kill-file-buffers
-C-c M-n                                        ggtags-next-mark
-C-c M-o                                        ggtags-find-other-symbol
-C-c M-p                                        ggtags-prev-mark
-C-c M-DEL                                      ggtags-delete-tags
+- C-c M-SPC :: ggtags-save-to-register
+- C-c M-% :: ggtags-query-replace
+- C-c M-/ :: ggtags-view-search-history
+- C-c M-? :: ggtags-show-definition
+- C-c M-b :: ggtags-browse-file-as-hypertext
+- C-c M-f :: ggtags-find-file
+- C-c M-g :: ggtags-grep
+- C-c M-h :: ggtags-view-tag-history
+- C-c M-i :: ggtags-idutils-query
+- C-c M-j :: ggtags-visit-project-root
+- C-c M-k :: ggtags-kill-file-buffers
+- C-c M-n :: ggtags-next-mark
+- C-c M-o :: ggtags-find-other-symbol
+- C-c M-p :: ggtags-prev-mark
+- C-c M-DEL :: ggtags-delete-tags
 
-projectile
-----------
-C-c p m                                        projectile-commander
+* projectile
+- C-c p m :: projectile-commander
 
-C-c p !                                        projectile-run-shell-command-in-root
-C-c p &                                        projectile-run-async-shell-command-in-root
-C-c p 4                                        Prefix Command
-C-c p D                                        projectile-dired
-C-c p g                                        projectile-find-file-dwim
-C-c p F                                        projectile-find-file-in-known-projects
-C-c p f                                        projectile-find-file
-C-c p e                                        projectile-recentf
-C-c p d                                        projectile-find-dir
-C-c p a                                        projectile-find-other-file (toggle .h <-> .cpp etc)
-C-c p b                                        projectile-switch-to-buffer
-C-c p I                                        projectile-ibuffer
-C-c p R                                        projectile-regenerate-tags
-C-c p p                                        projectile-switch-project
-C-c p S                                        projectile-save-project-buffers
-C-c p r                                        projectile-replace
-C-c p c                                        projectile-compile-project
-C-c p u                                        projectile-run-project
-C-c p P                                        projectile-test-project
-C-c p T                                        projectile-find-test-file
-C-c p i                                        projectile-invalidate-cache
-C-c p j                                        projectile-find-tag
-C-c p k                                        projectile-kill-buffers
-C-c p l                                        projectile-find-file-in-directory
-C-c p o                                        projectile-multi-occur
-C-c p t                                        projectile-toggle-between-implementation-and-test
-C-c p v                                        projectile-vc
-C-c p z                                        projectile-cache-current-file
+- C-c p ! :: projectile-run-shell-command-in-root
+- C-c p & :: projectile-run-async-shell-command-in-root
+- C-c p 4 :: Prefix Command
+- C-c p D :: projectile-dired
+- C-c p g :: projectile-find-file-dwim
+- C-c p F :: projectile-find-file-in-known-projects
+- C-c p f :: projectile-find-file
+- C-c p e :: projectile-recentf
+- C-c p d :: projectile-find-dir
+- C-c p a :: projectile-find-other-file (toggle .h <-> .cpp etc)
+- C-c p b :: projectile-switch-to-buffer
+- C-c p I :: projectile-ibuffer
+- C-c p R :: projectile-regenerate-tags
+- C-c p p :: projectile-switch-project
+- C-c p S :: projectile-save-project-buffers
+- C-c p r :: projectile-replace
+- C-c p c :: projectile-compile-project
+- C-c p u :: projectile-run-project
+- C-c p P :: projectile-test-project
+- C-c p T :: projectile-find-test-file
+- C-c p i :: projectile-invalidate-cache
+- C-c p j :: projectile-find-tag
+- C-c p k :: projectile-kill-buffers
+- C-c p l :: projectile-find-file-in-directory
+- C-c p o :: projectile-multi-occur
+- C-c p t :: projectile-toggle-between-implementation-and-test
+- C-c p v :: projectile-vc
+- C-c p z :: projectile-cache-current-file
 
-C-c p s                                        Prefix Command
-C-c p s g                                      projectile-grep
-C-c p s s                                      projectile-ag
+- C-c p s :: Prefix Command
+- C-c p s g :: projectile-grep
+- C-c p s s :: projectile-ag
 
-C-c p 4 C-o                                    projectile-display-buffer
-C-c p 4 a                                      projectile-find-other-file-other-window
-C-c p 4 b                                      projectile-switch-to-buffer-other-window
-C-c p 4 d                                      projectile-find-dir-other-window
-C-c p 4 f                                      projectile-find-file-other-window
-C-c p 4 g                                      projectile-find-file-dwim-other-window
-C-c p 4 t                                      projectile-find-implementation-or-test-other-window
+- C-c p 4 C-o :: projectile-display-buffer
+- C-c p 4 a :: projectile-find-other-file-other-window
+- C-c p 4 b :: projectile-switch-to-buffer-other-window
+- C-c p 4 d :: projectile-find-dir-other-window
+- C-c p 4 f :: projectile-find-file-other-window
+- C-c p 4 g :: projectile-find-file-dwim-other-window
+- C-c p 4 t :: projectile-find-implementation-or-test-other-window
 
-elpy
-----
-M-x elpy-config                                check current config
-M-x pyvenv-workon                              virtualenvwrapper's workon (switch python virtual env)
+* elpy
+- M-x elpy-config :: check current config
+- M-x pyvenv-workon :: virtualenvwrapper's workon (switch python virtual env)
 
-C-c C-f                                        elpy-find-file (with prefix arg:
-                                                                    open module file at import
-                                                                    open associated test file
-                                                                    open implementation file from test)
-C-c C-s                                        elpy-rgrep-symbol
+- C-c C-f :: elpy-find-file (with prefix arg:
+                                             open module file at import
+                                             open associated test file
+                                             open implementation file from test)
+- C-c C-s :: elpy-rgrep-symbol
 
-C-c C-o                                        elpy-occur-definitions (outline all class, def)
+- C-c C-o :: elpy-occur-definitions (outline all class, def)
 
-C-c <, C-c >                                   indent left/right
-M-.                                            elpy-goto-definition
-M-*                                            pop-tag-mark
+- C-c <, C-c > :: indent left/right
+- M-. :: elpy-goto-definition
+- M-* :: pop-tag-mark
 
-C-c C-v                                        elpy-check (flycheck by flake8, custom by python-check-command)
-C-c C-d                                        elpy-doc
+- C-c C-v :: elpy-check (flycheck by flake8, custom by python-check-command)
+- C-c C-d :: elpy-doc
 
-on completion option:
-C-d/<f1>                                       display doc
-C-w                                            display tmp window with src
+** on completion option
+- C-d/<f1> :: display doc
+- C-w :: display tmp window with src
 
-importmagic:
-C-c RET                                        importmagic-add-import
-C-c <S-return>                                 importmagic-fixup
+** importmagic
+- C-c RET :: importmagic-add-import
+- C-c <S-return> :: importmagic-fixup
 
-refactor:
-C-c C-e                                        elpy-multiedit-python-symbol-at-point (prefix use syntactic)
-C-c C-r                                        elpy-refactor (complex)
+** refactor
+- C-c C-e :: elpy-multiedit-python-symbol-at-point (prefix use syntactic)
+- C-c C-r :: elpy-refactor (complex)
 
-debugging:
-M-x pdb -> python -m pdb <file>
-C-x C-a C-<cmd>, in gud, just <cmd>            check http://pymotw.com/2/pdb/
+** debugging
+- M-x pdb -> python -m pdb <file> :: debug python
+- C-x C-a C-<cmd>, in gud, just <cmd> :: check [[http://pymotw.com/2/pdb/]]
 
-interactive python:
-C-c C-z                                        elpy-shell-switch-to-shell
-C-c C-c                                        elpy-shell-send-region-or-buffer
-C-M-x                                          python-shell-send-defun (send curr top level class or fun)
+** interactive python
+- C-c C-z :: elpy-shell-switch-to-shell
+- C-c C-c :: elpy-shell-send-region-or-buffer
+- C-M-x :: python-shell-send-defun (send curr top level class or fun)
 
-testing:
-C-c C-t                                        elpy-test (run all tests if prefix arg C-u)
-M-x elpy-set-test-runner                       support std unittest discovery runner, Django, nose, py.test
+** testing
+- C-c C-t :: elpy-test (run all tests if prefix arg C-u)
+- M-x elpy-set-test-runner :: support std unittest discovery runner, Django, nose, py.test
