@@ -12,6 +12,9 @@ C-o to create blank line
 *** TODO subtask 1
 *** TODO subtask 2
 **** subheadings for subtask 2
+** TODO [#C] task with priority; org mode has supports priority levels A, B, C.
+** TODO [#B] C-c , to add/remove/change priority
+** TODO [#A] task with priority
 
 * basics
 
@@ -89,3 +92,37 @@ C-c C-s org-schedule
     SCHEDULED: <2015-09-16 Wed>
 
 C-c a a to list agenda
+
+** table
+
+*** basic org table
+
+C-c | org-table-create-or-convert-from-region
+C-c C-c org-table-align
+M-a, M-e move to prev/next cell
+M-<left>, M-<right> move column left/right
+M-<up>, M-<down> move column up/down
+M-S-<left>, M-S-<up> kill curr column/row
+M-S-<right>, M-S-<down> insert column to the right/row below
+C-c -, C-c <RET> org-table-insert-hline/-and-move
+C-c ^ org-table-sort-lines
+M-x org-table-export as tab-separated file
+
+| header1 | header2 | header3 |
+|---------+---------+---------|
+| abc     | def     | eg      |
+|---------+---------+---------|
+| d       | d       | r       |
+|         |         | df      |
+|         |         | df      |
+|---------+---------+---------|
+
+
+*** table.el table
+
+table.el supports multiline cells etc
+
+C-c ~ org-table-create-with-table
+C-c ' org-edit-special
+
+C-h f table-insert for help
