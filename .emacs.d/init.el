@@ -69,6 +69,7 @@
 (require 'init-ggtags)
 (require 'init-elpy)
 (require 'init-irony)
+(require 'init-cmake-mode)
 (require 'init-theme)
 (require 'init-desktop-save)
 

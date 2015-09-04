@@ -8,6 +8,8 @@
          ("C-c a" . org-agenda))
   :config
   (setq org-log-done 'time)
+  (setq org-use-sub-superscripts '{})
+  (setq org-export-with-sub-superscripts '{})
   )
 
 (provide 'init-org)

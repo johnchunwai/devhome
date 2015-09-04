@@ -27,7 +27,6 @@
   - f :: filter package list
 
 * shotcuts
-
 - C-g :: Cancel command
 - M-x desktop-save :: save emacs session
 - C-u :: pass argument to command
