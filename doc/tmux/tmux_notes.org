@@ -14,9 +14,68 @@
 
 [[https://gist.github.com/MohamedAlaa/2961058][Mohamed Alaa - tmux-cheatsheet]]
 
+tmux prefix C-b, : below means prefix followed by :
+
 start new/start new with name
 #+BEGIN_EXAMPLE
 tmux
 tmux new -s myname
+#+END_EXAMPLE
+
+attach/attach to name
+#+BEGIN_EXAMPLE
+tmux a num
+tmux a -t myname
+:new
+#+END_EXAMPLE
+
+list session
+#+BEGIN_EXAMPLE
+tmux ls
+:s
+#+END_EXAMPLE
+
+kill one/all sessions
+#+BEGIN_EXAMPLE
+tmux kill-session -t myname
+tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs kill
+#+END_EXAMPLE
+
+** With prefix
+
+*** misc
+#+BEGIN_EXAMPLE
+?    list shortcuts
+#+END_EXAMPLE
+
+*** sessions
+#+BEGIN_EXAMPLE
+$    rename session
+d    detach
+#+END_EXAMPLE
+
+*** windows
+#+BEGIN_EXAMPLE
+c    create
+w    list
+n    next
+p    prev
+f    find
+,    name
+&    kill
+#+END_EXAMPLE
+
+*** panes
+#+BEGIN_EXAMPLE
+%    vert split
+"    hori split
+o    swap
+q    show pane num (quick press the key will swap)
+{    move to left
+}    move to right
+x    kill
+SPC  toggle hori/vert layout
+:join-pane [-hv] [-s src-pane] [-t dst-pane] (pane indexed by [session]:window (eg. -s :1))
+!    break-pane
 #+END_EXAMPLE
 
