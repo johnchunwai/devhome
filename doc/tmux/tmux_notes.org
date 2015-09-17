@@ -1,0 +1,22 @@
+* Intro
+- tmux provides n-2-n mapping between shells and terminals
+- Eg.
+  - 2 tmux sessions A and B
+    - in A, have 2 shells, one running emacs, one running vim
+    - in B, have 1 shell running zsh
+    - have 1 terminal attached to tmux session A
+      - this terminal can control either of the shells by swapping windows (tabs) or panes
+    - have 2 terminals attached to tmux session B
+      - this causes the 2 terminals to mirror each other
+      - can be used for pair programming etc.
+    
+* Cheat sheet
+
+[[https://gist.github.com/MohamedAlaa/2961058][Mohamed Alaa - tmux-cheatsheet]]
+
+start new/start new with name
+#+BEGIN_EXAMPLE
+tmux
+tmux new -s myname
+#+END_EXAMPLE
+

@@ -31,7 +31,7 @@ M-o avy-link
 *** weblink
 
 some links by square bracket
-[[https://github.com/johnchunwai/devhome][my emacs devhome repo]]
+[[https://github.com/johnchunwai/devhome][my emacs devhome repo]<last close square bracket>
 C-c C-o for org-open-at-point or M-o for ace-link
 
 *** link to other doc
@@ -126,3 +126,25 @@ C-c ~ org-table-create-with-table
 C-c ' org-edit-special
 
 C-h f table-insert for help
+
+** easy template
+
+To insert a structural element, type a `<', followed by a template selector and <TAB>. Completion takes effect only when the above keystrokes are typed on a line by itself.
+
+The following template selectors are currently supported.
+
+#+BEGIN_SRC 
+s	#+BEGIN_SRC ... #+END_SRC 
+e	#+BEGIN_EXAMPLE ... #+END_EXAMPLE 
+q	#+BEGIN_QUOTE ... #+END_QUOTE 
+v	#+BEGIN_VERSE ... #+END_VERSE 
+c	#+BEGIN_CENTER ... #+END_CENTER 
+l	#+BEGIN_LaTeX ... #+END_LaTeX 
+L	#+LaTeX: 
+h	#+BEGIN_HTML ... #+END_HTML 
+H	#+HTML: 
+a	#+BEGIN_ASCII ... #+END_ASCII 
+A	#+ASCII: 
+i	#+INDEX: line 
+I	#+INCLUDE: line
+#+END_SRC

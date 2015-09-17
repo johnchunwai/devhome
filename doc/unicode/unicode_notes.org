@@ -1,0 +1,7 @@
+* Fundamentals
+** ascii
+- 0-127 same everywhere
+- 128-255 depends on code page (eg. Israel=862, Greek=737)
+  - worse on Asia, DBSC (double byte character set), some 1 byte, some 2
+
+** unicode
