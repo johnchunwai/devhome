@@ -26,8 +26,15 @@
 
 - 0 as null terminating character still works with utf-8 string
 
-** encoding
+** utf-8 vs utf-16
+- utf-8 uses less bytes for ascii which is dominant (1 byte per char)
+- utf-16 favours asian character sets (2 bytes instead of 3 in utf-8)
+- cyrillic, hebrew, and several other unicode blocks are 2 bytes in both
+- utf-16 is wasting space for 1 byte chars and fails to be a fixed length encoding - worst of both worlds
+- on web, html/xml tags are all english, even mixed with asian characters, utf-8 is not less efficient than 16
+- utf-16 is quite popular among languages: qt, java, c#, old version python
 
+** encoding
 For email or web:
 #+BEGIN_EXAMPLE
 Content-Type: text/plain; charset="UTF-8"
@@ -40,3 +47,44 @@ For web alternatively (meta must be the first thing in <head>):
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 #+END_EXAMPLE
 
+** windows vs linux
+- linux considers narrow strings as utf-8 by default
+  - c/c++ code just works with utf-8 characters automatically
+- windows sucks
+  - app must be unicode aware to operate on file paths with unicode blocks
+  - the std lib forwards narrow string directly to OS ANSI api, no way to override
+    - change std::locale doesn't work
+    - have to use msft non-std extensions that take wide-string params
+  - can't return unicode std::exception::what() or support localeconv
+  - mis-treat utf-16 as fixed width, treats a single 4-byte utf-16 char as 2 chars (eg. 2 bckspc to del)
+
+** windows programming approach
+- u8 literal for utf-8 string literals
+- use utf-8 everywhere but translate before calling api's that accept strings
+- performance shouldn't be an issue as those UI/file system apis are way slower than the translation itself
+- interop with other systems (eg. thru http) becomes seamless
+- avoid using literals (eg. L for w, u for 16, U for 32) except on api boundary that needs utf-16
+- avoid macros/types that are sensitive to UNICODE/_UNICODE constant (eg. CreateWindow, LPTSTR)
+- always define UNICODE/_UNICODE so edge apis has unicode support
+- std::string and char* are utf-8 everywhere unless specified
+- only use wide version of win32 api's, eg.
+#+BEGIN_EXAMPLE
+::SetWindowTextW(widen(someStdString or "string literal").c_str())
+#+END_EXAMPLE
+(assume using boost.nowide)
+- MFC strings
+#+BEGIN_EXAMPLE
+CString smth;
+// Convert right away
+std::string s = str(boost::format("Hello %s\n") % narrow(smth));
+AfxMessageBoxW(widen(s).c_str(), L"Error", MB_OK);
+#+END_EXAMPLE
+- files and fstreams
+#+BEGIN_EXAMPLE
+// wide version is just for windows, don't need that for linux, abstract out
+std::ifstream ifs(widen("hello"), std::ios_base::binary);
+#+END_EXAMPLE
+
+** boost utf-8 library
+
+Check boost.Locale vs boost.nowide
