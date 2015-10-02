@@ -42,6 +42,7 @@
 - C-a, C-e, M-a, M-e :: Begin/end of line, begin/end of sentence
 - C-M-a, C-M-e :: Begin/end of function
 - C-v, M-v :: pagedown/pageup
+- C-M-v, C-M-S-v :: pagedown/up other window
 - M-<, M-> :: begin/end of buffer
 - C-l :: move screen so point at mid/top/bottom of screen
 - M-r :: similar to above by move point instead of screen
@@ -53,6 +54,13 @@
 - C-M-b :: backward-sexp
 - C-M-k :: kill-sexp
 - C-M-t :: transpose-sexp
+
+* editing
+- M-l :: downcase-word
+- M-u :: upcase-word
+- M-c :: capitalize-word
+- C-x C-l :: downcase-region
+- C-x C-u :: upcase-region
 
 * file local variable
 - M-x add-file-local-variable-prop-line :: eg. lexical-binding t
@@ -73,6 +81,7 @@
 - C-x h :: region whole buffer
 - C-M-h :: Region around a function
 - C-M-<SPC>, C-M-@ :: mark-sexp forward
+- C-x <SPC> :: rect mark mode
 
 - C-down-mouse-1 :: multi-cursor at mouse pointer
 - C->, C-< :: multi-cursor for next/prev like this
@@ -100,6 +109,7 @@
     - /g :: add filtered as group
     - // :: turn off filtering
 - C-x k :: Kill the current buffer
+- M-x revert-buffer :: reload file in buffer
 
 - M-\ :: delete space between 2 words
 - C-w, M-w :: Kill region
