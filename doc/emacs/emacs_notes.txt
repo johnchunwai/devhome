@@ -235,6 +235,8 @@
 - M-] :: ggtags-find-reference
 - C-M-. :: ggtags-find-tag-regexp
 
+  - M-n/M-p :: next/prev ref from other window for find ref etc
+
 - C-c M-SPC :: ggtags-save-to-register
 - C-c M-% :: ggtags-query-replace
 - C-c M-/ :: ggtags-view-search-history
