@@ -1,0 +1,28 @@
+* initialization
+** sudo apt-get update
+** sudo apt-get build-essential module-assistant
+** sudo m-a prepare
+* apt-get
+** commands
+*** sudo apt-get install <package>
+*** apt-cache search <package>
+*** sudo apt-get purge <package>
+*** sudo apt-get build-dep <package>
+*** apt-cache policy <package> (show version)
+* install from source
+** cd downloads
+** wget <url>
+** tar -xzvf <tar.gz file>
+** cd <src dir>
+** ./configure
+** fix all dependencies
+** make
+** sudo make install
+** keep the src folder so we can sudo make uninstall
+* for emacs on ubuntu
+** install from src gnu global (apt-get too outdated)
+** cmake 3.3 or above from src
+** sudo apt-get install clang-3.6
+** sudo apt-get install libclang-3.6-dev
+** emacs 24.4 or above from src
+** sudo apt-get install git
