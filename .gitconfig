@@ -10,6 +10,6 @@
 [push]
 	default = simple
 [credential]
-	helper = wincred
+	helper = store
 [alias]
     hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
