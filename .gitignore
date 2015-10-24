@@ -6,6 +6,10 @@
 .*
 /*
 !.gitignore
+!.XWinrc
+!.Xresources
+!.zshrc
+!.fonts/
 !.emacs.d/
 !doc/
 .emacs.d/*
