@@ -8,8 +8,13 @@
 
 (show-paren-mode 1)
 
-(global-subword-mode t)
+(global-subword-mode 0)
 
+(setq-default
+ whitespace-line-column 80
+ whitespace-style '(face lines-tail))
+
+(add-hook 'prog-mode-hook #'whitespace-mode)
 
 (provide 'init-coding-general)
 
