@@ -1,28 +1,88 @@
 * initialization
-** sudo apt-get update
-** sudo apt-get build-essential module-assistant
-** sudo m-a prepare
+#+BEGIN_SRC 
+sudo apt-get update
+sudo apt-get dkms build-essential module-assistant
+sudo m-a prepare
+sudo apt-get upgrade
+# if using virtualbox, install guest additions
+#+END_SRC
+
 * apt-get
 ** commands
-*** sudo apt-get install <package>
-*** apt-cache search <package>
-*** sudo apt-get purge <package>
-*** sudo apt-get build-dep <package>
-*** apt-cache policy <package> (show version)
+#+BEGIN_SRC 
+sudo apt-get install <package>
+apt-cache search <package>
+sudo apt-get purge <package>
+sudo apt-get build-dep <package>
+apt-cache policy <package> (show version)
+sudo apt-get dist-upgrade
+#+END_SRC
+
 * install from source
-** cd downloads
-** wget <url>
-** tar -xzvf <tar.gz file>
-** cd <src dir>
-** ./configure
-** fix all dependencies
-** make
-** sudo make install
-** keep the src folder so we can sudo make uninstall
+#+BEGIN_SRC 
+cd downloads
+wget <url>
+tar -xzvf <tar.gz file>
+cd <src dir>
+./configure
+# fix all dependencies
+make
+sudo make install
+# keep the src folder so we can sudo make uninstall
+#+END_SRC
+
 * for emacs on ubuntu
-** install from src gnu global (apt-get too outdated)
-** cmake 3.3 or above from src
-** sudo apt-get install clang-3.6
-** sudo apt-get install libclang-3.6-dev
-** emacs 24.4 or above from src
-** sudo apt-get install git
+#+BEGIN_SRC 
+# install from src gnu global (apt-get too outdated)
+# cmake 3.3 or above from src
+sudo apt-get install clang-3.6
+sudo apt-get install libclang-3.6-dev
+# emacs 24.4 or above from src
+sudo apt-get install git
+sudo apt-get install mesa-utils
+sudo apt-get install nux-tools
+# in handmade/, gtags
+#+END_SRC
+
+* choose default compiler
+#+BEGIN_SRC 
+sudo update-alternatives --config cc
+sudo update-alternatives --config c++
+#+END_SRC
+If you've installed your clang manually and put it in a non standard
+place it may not show up with --config. For example if it's in
+/usr/bin/clang++-3.6, then first install a new alternative:
+#+BEGIN_SRC
+sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-3.6 30
+#+END_SRC
+
+* oh-my-zsh
+#+BEGIN_SRC 
+sudo apt-get install curl
+sudo apt-get install zsh
+sudo apt-get install git
+curl -L http://install.ohmyz.sh > install.sh
+sh install.sh
+#+END_SRC
+
+* misc
+** check ubuntu version, 32/64bit
+#+BEGIN_SRC 
+lsb_release -a
+uname -m
+#+END_SRC
+** check cpu 32/64bit
+#+BEGIN_SRC 
+lscpu
+#+END_SRC
+** check 3d cap
+#+BEGIN_SRC 
+/usr/lib/nux/unity_support_test -p (with nux-tools)
+glxinfo | grep OpenGL
+glxgears
+glmark2
+#+END_SRC
+** check disk usage
+#+BEGIN_SRC 
+df -h
+#+END_SRC

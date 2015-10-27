@@ -129,7 +129,9 @@ C-h f table-insert for help
 
 ** easy template
 
-To insert a structural element, type a `<', followed by a template selector and <TAB>. Completion takes effect only when the above keystrokes are typed on a line by itself.
+To insert a structural element, type a `<', followed by a template
+selector and <TAB>. Completion takes effect only when the above
+keystrokes are typed on a line by itself.
 
 The following template selectors are currently supported.
 

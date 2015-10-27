@@ -10,6 +10,9 @@
          ("C-{" . sp-backward-barf-sexp))
   :init
   (smartparens-global-mode t)
+  (defun my-disable-smartparens ()
+    (smartparens-mode 0))
+  (add-hook 'c-mode-common-hook #'my-disable-smartparens)
   :config
   (require 'smartparens-config)
   )
