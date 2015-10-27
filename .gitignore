@@ -16,6 +16,9 @@
 !.emacs.d/init.el
 !.emacs.d/google-c-style-mod.el
 !.emacs.d/lisp/
+.Xresources
+.fonts
+.zshrc
 
 # executables
 *.exe
