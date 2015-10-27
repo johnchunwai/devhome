@@ -1,6 +1,7 @@
 * initialization
 #+BEGIN_SRC 
 sudo apt-get update
+<<<<<<< HEAD
 sudo apt-get dkms build-essential module-assistant
 sudo m-a prepare
 sudo apt-get upgrade
@@ -9,6 +10,26 @@ sudo apt-get upgrade
 
 * apt-get
 ** commands
+=======
+sudo apt-get upgrade
+sudo apt-get dkms build-essential module-assistant
+sudo m-a prepare
+# if using virtualbox, install guest additions
+#+END_SRC
+
+* tweaks
+** system settings -> keyboard -> app shortcuts
+*** add /usr/bin/xfce4-terminal.wrapper for Ctl-Alt-T
+** system settings -> window manager -> advanced
+*** check snap "to other windows"
+** edit ~/.config/user-dirs.dirs
+*** change all folders to lowercase names
+*** rename 'y/A-Z/a-z' <each of the files in ls ~/>
+
+* package management
+** apt-get
+*** commands
+>>>>>>> linux
 #+BEGIN_SRC 
 sudo apt-get install <package>
 apt-cache search <package>
@@ -17,6 +38,15 @@ sudo apt-get build-dep <package>
 apt-cache policy <package> (show version)
 sudo apt-get dist-upgrade
 #+END_SRC
+<<<<<<< HEAD
+=======
+** dpkg
+*** commands
+#+BEGIN_SRC 
+sudo dpkg -i /path/to/deb/file (-r for remove)
+sudo apt-get install -f (for missing dependencies)
+#+END_SRC
+>>>>>>> linux
 
 * install from source
 #+BEGIN_SRC 
@@ -75,6 +105,13 @@ uname -m
 #+BEGIN_SRC 
 lscpu
 #+END_SRC
+<<<<<<< HEAD
+=======
+** check kernel version
+#+BEGIN_SRC 
+uname -r
+#+END_SRC
+>>>>>>> linux
 ** check 3d cap
 #+BEGIN_SRC 
 /usr/lib/nux/unity_support_test -p (with nux-tools)
