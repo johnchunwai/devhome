@@ -106,3 +106,7 @@ glmark2
 #+BEGIN_SRC 
 df -h
 #+END_SRC
+** running sudo with user path
+#+BEGIN_SRC 
+sudo -E env "PATH=$PATH" <command> <args>
+#+END_SRC
