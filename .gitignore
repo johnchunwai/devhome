@@ -6,17 +6,12 @@
 .*
 /*
 !.gitignore
-!.XWinrc
-!.Xresources
-!.zshrc
-!.fonts/
 !.emacs.d/
 !doc/
 .emacs.d/*
 !.emacs.d/init.el
 !.emacs.d/google-c-style-mod.el
 !.emacs.d/lisp/
-.zshrc
 
 # executables
 *.exe
