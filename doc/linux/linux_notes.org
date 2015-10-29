@@ -5,6 +5,8 @@ sudo apt-get upgrade
 sudo apt-get dkms build-essential module-assistant
 sudo m-a prepare
 # if using virtualbox, install guest additions
+sudo apt-get install apt-file
+sudo apt-get install checkinstall
 #+END_SRC
 
 * tweaks
@@ -21,17 +23,20 @@ sudo m-a prepare
 *** commands
 #+BEGIN_SRC 
 sudo apt-get install <package>
-apt-cache search <package>
+apt-cache search <package> --names-only
 sudo apt-get purge <package>
 sudo apt-get build-dep <package>
 apt-cache policy <package> (show version)
 sudo apt-get dist-upgrade
+apt-file search <filename> // look for pkg that contains that file
 #+END_SRC
 ** dpkg
 *** commands
 #+BEGIN_SRC 
 sudo dpkg -i /path/to/deb/file (-r for remove)
 sudo apt-get install -f (for missing dependencies)
+apt-cache policy/search <package> will show the dpkg package
+dpkg -l | grep <package> to find installed packages
 #+END_SRC
 
 * install from source
@@ -43,11 +48,12 @@ cd <src dir>
 ./configure
 # fix all dependencies
 make
-sudo make install
+# the following replaces make install and create a deb pkg for uninstall
+sudo checkinstall
 # keep the src folder so we can sudo make uninstall
 #+END_SRC
 
-* for emacs on ubuntu
+* for dev on ubuntu
 #+BEGIN_SRC 
 # install from src gnu global (apt-get too outdated)
 # cmake 3.3 or above from src
@@ -57,6 +63,7 @@ sudo apt-get install libclang-3.6-dev
 sudo apt-get install git
 sudo apt-get install mesa-utils
 sudo apt-get install nux-tools
+sudo apt-get install mesa-common-dev
 # in handmade/, gtags
 #+END_SRC
 
