@@ -185,5 +185,28 @@ git push origin :<branch>
 git fetch origin
 git 
 
-
-
+* detach subdiretory into separate repo
+** prepare old repo
+#+BEGIN_SRC 
+pushd <big-repo>
+git subtree split -P <name-of-folder> -b <name-of-new-branch>
+popd
+#+END_SRC
+** create new repo
+#+BEGIN_SRC 
+mkdir <new-repo>
+pushd <new-repo>
+git init
+git pull </path/to/big-repo> <name-of-new-branch>
+#+END_SRC
+** link new repo to github
+#+BEGIN_SRC 
+git remote add origin <git@github.com:my-user/new-repo.git>
+git push origin -u master
+#+END_SRC
+** clean up old repo
+#+BEGIN_SRC 
+popd # get out of <new-repo>
+pushd <big-repo>
+git rm -rf <name-of-folder>
+#+END_SRC
