@@ -7,7 +7,7 @@
   (load-theme 'zenburn t)
   (set-face-attribute 'highlight nil :background "#222")
   ;; font - download dejavu sans mono from the web and install
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono")
+  ;; (set-face-attribute 'default nil :font "DejaVu Sans Mono")
   )
 
 (provide 'init-theme)
