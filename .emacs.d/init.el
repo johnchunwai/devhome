@@ -50,27 +50,28 @@
 (require 'init-el-get)
 (require 'init-misc)
 (require 'init-org)
-(require 'init-ag)
-(require 'init-hydra)
-(require 'init-avy)
-(require 'init-ace-link)
-(require 'init-ace-window)
-(require 'init-golden-ratio)
-(require 'init-swiper)
-(require 'init-counsel)
-(require 'init-smex)
-(require 'init-multiple-cursors)
-(require 'init-coding-general)
-(require 'init-coding-c)
-(require 'init-projectile)
-(require 'init-smartparens)
-(require 'init-yasnippet)
-(require 'init-company)
-(require 'init-ggtags)
-(require 'init-elpy)
-(require 'init-irony)
-(require 'init-cmake-mode)
-(require 'init-theme)
+(require 'init-toc-org)
+;;(require 'init-ag)
+;;(require 'init-hydra)
+;;(require 'init-avy)
+;;(require 'init-ace-link)
+;;(require 'init-ace-window)
+;;(require 'init-golden-ratio)
+;;(require 'init-swiper)
+;;(require 'init-counsel)
+;;(require 'init-smex)
+;;(require 'init-multiple-cursors)
+;;(require 'init-coding-general)
+;;(require 'init-coding-c)
+;;(require 'init-projectile)
+;;(require 'init-smartparens)
+;;(require 'init-yasnippet)
+;;(require 'init-company)
+;;(require 'init-ggtags)
+;;(require 'init-elpy)
+;;(require 'init-irony)
+;;(require 'init-cmake-mode)
+;;(require 'init-theme)
 (require 'init-desktop-save)
 
 ;;;
@@ -81,3 +82,15 @@
 (provide 'init)
 
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages '(el-get use-package)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
