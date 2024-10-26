@@ -9,6 +9,7 @@
 	email = johnchunwai@gmail.com
 [push]
 	default = simple
+	autoSetupRemote = true
 [credential]
 	helper = wincred
 [alias]
